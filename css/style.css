@@ -14,11 +14,11 @@
 }
 
 [data-theme="dark"] {
-    --b: #191919; /* container bgs */
-    --bw: 3px; /* border width */
-    --bc: #34f2ff; /* border color */
-    --bcc: #34f2ff; /* border color outset */
-    --h: #252525; /* header bgs */
+    --b: #191919;
+    --bw: 3px;
+    --bc: #34f2ff;
+    --bcc: #34f2ff;
+    --h: #252525;
     --pink: #e74492;
     --bt: solid;
     --color:#000;
@@ -83,11 +83,13 @@ a:hover{
 @font-face{
     font-family:'Pixel Operator';
     src:url('../fonts/Pixel_Operator.woff2');
+    font-display: swap;
 }
 
 @font-face{
     font-family:'Orbitron';
     src:url('../fonts/Orbitron.woff2');
+    font-display: swap;
 }
 
 body {
@@ -239,16 +241,6 @@ header{
     order:8;
     z-index:2;
 }
-
-/* .banner{ */
-    /* grid-area: banner; */
-    /* box-sizing: border-box; */
-    /* display:flex; */
-    /* flex-direction:column; */
-    /* justify-content: flex-end; */
-    /* order:7; */
-    /* z-index:1; */
-/* } */
 
 .footer { 
     outline:var(--bw) var(--bt) var(--bc);
@@ -449,7 +441,7 @@ img {
 
 .update{
     background-color:var(--h);
-	color:var(--text)
+	color:var(--text);
     padding:5px;
     margin-bottom:10px;
 }
@@ -498,6 +490,8 @@ button:hover{
 }
 
 iframe{
+    display:block;
+    border:0;
     color:var(--color);
 }
 
@@ -528,10 +522,6 @@ input[type="text"]:focus:hover {
     border-radius:0;
 }
 
-/* Shrinks the whole layout (boxes + fonts) on short viewports like 720p,
-   using fixed px overrides instead of vh/zoom to avoid unit conflicts.
-   Scoped to min-width:1001px so it never overlaps the mobile breakpoint
-   below (max-width:1000px). */
 @media only screen and (max-height: 820px) and (min-width: 1001px) {
     #mikuheader {
         height: 220px;
@@ -560,10 +550,6 @@ input[type="text"]:focus:hover {
 }
 
 @media only screen and (max-width: 1000px) {
-    /* .virtualdiva{ */
-        /* display:none; */
-    /* } */
-   
     .container {  
         display:flex;
         flex-direction:column; 
@@ -653,4 +639,25 @@ input[type="text"]:focus:hover {
     font-size: 19px;
     opacity: .9;
     margin-bottom: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+.main iframe {
+    width: 100%;
+    height: 100%;
+}
+.soundcloud-placeholder {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--b);
 }
