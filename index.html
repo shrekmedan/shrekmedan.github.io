@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tukang Olah Corp.</title>
+        <link rel="stylesheet" href="css/style.css">
+        <meta name="description" content="Tukang Olah Official Website">      
+    </head>
+    <body>
+       
+        <div id="wrapper">
+            <div class="headergede">
+                <div class="btn-theme-container">
+                    <div class="btn-theme">
+                        <button onclick="toggleTheme();">Toggle Theme</button>
+                    </div>
+                </div>
+                <div id="miku">
+                    <div class="virtualdiva"><br><br>WELCOME</div>
+                    <div id="mikuheader"> </div>
+                </div>
+            </div>
+            
+        <div class="container">
+            <div class="main">
+                <iframe id="mainframe" src="pages/home.html" width="100%" height="100%" frameborder="0" name="frame"></iframe>
+            </div>
+            <div class="links">
+                <div class="title">
+                    <header>DIRECTORY</header>
+                </div>
+                <div class="inner-nav" >
+                    <ul class="navi" >
+						<li class="navigation"><a href="pages/home.html" target="frame">Home</a></li>
+						<li class="navigation"><a href="pages/about.html" target="frame">About</a></li>
+						<li class="navigation"><a href="pages/projects.html" target="frame">Projects</a></li>
+						<li class="navigation"><a href="pages/blog.html" target="frame">Blog</a></li>
+						<li class="navigation"><a href="pages/contact.html" target="frame">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="updates">
+                <div class="title">
+                    <header>UPDATES</header>
+                </div>                
+                <div class="inner">
+                    <div class="update">25.08.26 Site created!</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="title">
+                    <header>STATS</header>
+                </div>
+                <div class="stats_inner">
+                    <!-- <div>Hits: idk...</div> -->
+                    <div>Last Updated: 25.08.26</div>
+                </div>
+            </div>
+            <div class="jukebox">
+                <div class="title">
+                    <header>SOUNDCLOUD</header>
+                </div>
+                <div class="inner" style="padding:0;">
+                    <div id="musicplayer">
+						<iframe width="100%" height="450" scrolling="no" frameborder="no" 
+							src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/elzeXD&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
+						</iframe>
+                    </div>
+                </div>
+            </div>   
+            <div class="sponsor">
+                <div class="title">
+                    <header>PART OF</header>
+                </div>
+                <div id="c_widget"></div>
+            </div>
+                     
+        </div>
+            
+        <div class="footer">
+            Copyright © Tukang Olah Corp 2026. All Rights Reserved.
+        </div>
+            
+        </div>
+        <script src="scripts/theme.js"></script>
+    </body>
+</html>
