@@ -79,24 +79,15 @@ a:hover{
     letter-spacing:1.5px;
 }
 
-@font-face{
-    font-family:'Legacy';
-    src:url('../fonts/Legacy.otf');
-}
 
 @font-face{
     font-family:'Pixel Operator';
-    src:url('../fonts/Pixel_Operator.ttf');
+    src:url('../fonts/Pixel_Operator.woff2');
 }
 
 @font-face{
     font-family:'Orbitron';
-    src:url('../fonts/Orbitron.ttf');
-}
-
-@font-face{
-    font-family:'YTTD';
-    src:url('../fonts/YTTD.ttf');
+    src:url('../fonts/Orbitron.woff2');
 }
 
 body {
