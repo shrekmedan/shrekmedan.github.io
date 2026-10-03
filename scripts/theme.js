@@ -48,4 +48,25 @@ document.addEventListener('DOMContentLoaded', function () {
             musicPlayer.appendChild(iframe);
         }, { once: true });
     }
+
+    // Live Clock & Hit Counter (Stats Widget)
+    const clockEl = document.getElementById('liveClock');
+    if (clockEl) {
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            clockEl.textContent = `${h}:${m}:${s} WIB`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+
+    const hitEl = document.getElementById('hitCounter');
+    if (hitEl) {
+        let hits = parseInt(localStorage.getItem('tukangolah_hits') || '4828', 10) + 1;
+        try { localStorage.setItem('tukangolah_hits', hits); } catch (e) {}
+        hitEl.textContent = String(hits).padStart(6, '0');
+    }
 });

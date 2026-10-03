@@ -23,13 +23,55 @@
     </style>
     <body>
 		<header>TUKANG OLAH</header>
-			<p>
+		<div style="max-width:540px; margin:auto;">
+			<p style="margin:10px 0; line-height:1.22;">
 				Kalau ada masalah, dibongkar.<br>
-				Kalau tidak ada solusi, dicari.<br>
-				Kalau mentok, diolah dulu.<br>
-				<br>
-				Website ini berisi catatan, eksperimen, dan hasil ngoprek<br>
-				baik yang berhasil maupun yang gagal.
+				Kalau belum ada solusi, diriset.<br>
+				Kalau tetap mentok, diolah sampai matang.
 			</p>
+			<p style="margin:10px 0; line-height:1.2;">
+				Selamat datang di laboratorium digital <strong>Tukang Olah</strong>.
+			</p>
+			<p style="margin:10px 0; line-height:1.2;">
+				Di sini, logika matematika berpadu dengan seni ngoprek: teknologi tidak cuma dinikmati apa adanya, tapi dibedah, ditweak, dan dirakit kembali. Website ini adalah arsip catatan, eksperimen sistem, modul ajar logika, dan hasil ngoprek — baik yang sukses gemilang maupun yang berakhir restart paksa.
+			</p>
+
+			<div class="interactive-box" style="margin-top:14px;">
+				<div style="font-family:'Orbitron', sans-serif; font-size:14px; color:var(--pink); margin-bottom:4px;">[ SABDA OLAHAN HARI INI ]</div>
+				<div id="quoteDisplay" style="font-size:18px; line-height:1.2; min-height:40px; display:flex; align-items:center; justify-content:center; padding:2px 8px;">
+					"Komputer lemot bukan alasan beli baru, tapi tanda bahwa sistem minta diolah."
+				</div>
+				<div style="margin-top:8px;">
+					<button type="button" onclick="acakSabda()">Olah Kalimat Baru</button>
+				</div>
+			</div>
+
+			<p style="margin-top:14px; font-size:17px; line-height:1.2; opacity:0.85;">
+				Gunakan menu navigasi di sisi kiri untuk menelusuri isi direktori.<br>
+				#NamanyaJugaMengolah
+			</p>
+		</div>
+
+			<script>
+				const sabdaList = [
+					"Komputer lemot bukan alasan beli baru, tapi tanda bahwa sistem minta diolah.",
+					"Bagi guru matematika, bloatware itu seperti variabel tak terdefinisi: bikin semak dan buang energi.",
+					"Hidup itu mirip kalkulus: dekati limitnya, cari turunan masalahnya, lalu integrasikan solusinya.",
+					"Guru yang baik menyederhanakan materi; tukang olah yang baik menyederhanakan sistem.",
+					"Menyederhanakan rumus di papan tulis dan memangkas services Windows itu hakikatnya sama: eliminasi hal yang mubazir.",
+					"Jika sesuatu berjalan lancar pada percobaan pertama, justru di situ letak kecurigaannya.",
+					"Semua bug punya hukum logika; tidak ada yang acak, kita saja yang belum menemukan persamaannya.",
+					"RAM 16GB bukan alasan membiarkan aplikasi background makan 15GB tanpa izin.",
+					"Eksperimen yang gagal tetaplah sebuah data; yang sia-sia adalah tidak mencobanya sama sekali. Q.E.D."
+				];
+
+				function acakSabda() {
+					const el = document.getElementById('quoteDisplay');
+					const current = el.textContent.trim().replace(/^"|"$/g, '');
+					const filtered = sabdaList.filter(s => s !== current);
+					const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+					el.textContent = '"' + chosen + '"';
+				}
+			</script>
     </body>
 </html>

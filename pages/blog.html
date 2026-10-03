@@ -3,25 +3,208 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Daftar Catatan Blog - Tukang Olah</title>
         <link rel="stylesheet" href="../css/style.css" type="text/css" media="all">
         <script src="../scripts/theme.js"></script>
+        <!-- Data manifest artikel blog terpisah -->
+        <script src="posts/posts-data.js"></script>
     </head>
     <style>        
-        body{
-            background-color:var(--bg);
-			color:var(--text);
-            overflow:auto;
-            text-align:center;
-            background-image:none;
-            margin:10px;
+        body {
+            background-color: var(--b);
+            color: var(--text);
+            overflow: auto;
+            text-align: center;
+            background-image: none;
+            margin: 10px;
         }
-        
-        @keyframes fadeEffect {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }       
+
+        .blog-wrapper {
+            max-width: 540px;
+            margin: auto;
+        }
+
+        .blog-filter-bar {
+            margin: 10px 0 14px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .search-box {
+            width: 95%;
+            padding: 5px 8px;
+            border: var(--bw) var(--bt) var(--bc);
+            background-color: var(--b);
+            color: var(--text);
+            font-family: 'Pixel Operator', monospace;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .tag-pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pill-btn {
+            border: 1px solid var(--bc);
+            background-color: var(--h);
+            color: var(--pink);
+            font-family: 'Pixel Operator', monospace;
+            font-size: 13px;
+            padding: 2px 7px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .pill-btn:hover, .pill-btn.active {
+            background-color: var(--pink);
+            color: white;
+            border-color: var(--pink);
+        }
+
+        .btn-read-post {
+            display: inline-block;
+            border: var(--bw) var(--bt) var(--bc);
+            background-color: var(--h);
+            color: var(--pink);
+            font-family: 'Pixel Operator', monospace;
+            font-size: 15px;
+            padding: 3px 8px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-read-post:hover {
+            background-color: var(--pink);
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .empty-state {
+            padding: 20px;
+            background-color: var(--h);
+            border: var(--bw) var(--bt) var(--bc);
+            margin: 14px 0;
+            font-size: 16px;
+        }
     </style>
     <body>
-		soon
+		<header>CATATAN &amp; LOG OLAHAN</header>
+		<div class="blog-wrapper">
+			<p style="margin:10px 0; line-height:1.2;">
+				Ruang tulisan teknis, catatan pedagogi dari ruang kelas, serta arsip eksperimen sistem mandiri. Setiap catatan kini memiliki halaman utuh tersendiri.
+			</p>
+
+            <!-- Bar Pencarian & Filter Kategori -->
+            <div class="blog-filter-bar">
+                <input type="text" id="blogSearch" class="search-box" placeholder="Cari judul atau topik catatan..." oninput="filterPosts()">
+                <div id="tagPills" class="tag-pills">
+                    <button type="button" class="pill-btn active" onclick="setCategory('ALL', this)">SEMUA</button>
+                </div>
+                <div id="postCount" style="font-size:13px; opacity:0.8; margin-top:2px;">
+                    Memuat daftar catatan...
+                </div>
+            </div>
+
+            <!-- Wadah List Artikel Otomatis -->
+            <div id="postsContainer"></div>
+		</div>
+
+        <script>
+            let activeTag = 'ALL';
+
+            function initBlog() {
+                if (typeof BLOG_POSTS === 'undefined' || !Array.isArray(BLOG_POSTS)) {
+                    document.getElementById('postsContainer').innerHTML = 
+                        '<div class="empty-state">Gagal memuat posts-data.js. Pastikan file ada di pages/posts/posts-data.js.</div>';
+                    return;
+                }
+
+                // Bangun tombol filter kategori otomatis dari tag artikel
+                const tags = Array.from(new Set(BLOG_POSTS.map(p => p.tag).filter(Boolean)));
+                const pillsContainer = document.getElementById('tagPills');
+                tags.forEach(tag => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'pill-btn';
+                    btn.textContent = tag;
+                    btn.onclick = function() { setCategory(tag, this); };
+                    pillsContainer.appendChild(btn);
+                });
+
+                renderPosts();
+            }
+
+            function setCategory(tag, btnEl) {
+                activeTag = tag;
+                document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                if (btnEl) btnEl.classList.add('active');
+                renderPosts();
+            }
+
+            function filterPosts() {
+                renderPosts();
+            }
+
+            function renderPosts() {
+                const query = (document.getElementById('blogSearch').value || '').toLowerCase().trim();
+                const container = document.getElementById('postsContainer');
+                const countEl = document.getElementById('postCount');
+
+                const filtered = BLOG_POSTS.filter(post => {
+                    const matchCategory = (activeTag === 'ALL' || post.tag === activeTag);
+                    const matchQuery = !query || 
+                        post.title.toLowerCase().includes(query) || 
+                        post.excerpt.toLowerCase().includes(query) ||
+                        (post.tag && post.tag.toLowerCase().includes(query)) ||
+                        post.id.includes(query);
+                    return matchCategory && matchQuery;
+                });
+
+                countEl.textContent = `Menampilkan ${filtered.length} dari ${BLOG_POSTS.length} catatan olahan`;
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            Tidak ditemukan catatan dengan kata kunci atau kategori tersebut.<br>
+                            <span style="font-size:14px; opacity:0.8;">Coba ubah filter atau kata pencarian.</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = filtered.map(post => `
+                    <div class="blog-card">
+                        <div class="blog-date">
+                            LOG #${post.id} // ${post.date}
+                            <span class="tag-status">${post.tag || 'UMUM'}</span>
+                            <span style="font-size:13px; opacity:0.8; margin-left:6px;">${post.readTime || ''}</span>
+                        </div>
+                        <div style="font-size:19px; font-weight:bold; margin-bottom:4px; color:var(--pink);">
+                            <a href="${post.file}" style="color:var(--pink);">${escapeHtml(post.title)}</a>
+                        </div>
+                        <p style="font-size:18px; line-height:1.2; margin:4px 0 8px 0;">
+                            ${escapeHtml(post.excerpt)}
+                        </p>
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--bc); padding-top:6px; margin-top:6px;">
+                            <a href="${post.file}" class="btn-read-post">BACA ARTIKEL &rarr;</a>
+                            <a href="${post.file}" target="_blank" style="font-size:14px; opacity:0.8;" title="Buka di tab baru peramban">&#8599; Tab Baru</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function escapeHtml(text) {
+                if (!text) return '';
+                return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+
+            document.addEventListener('DOMContentLoaded', initBlog);
+        </script>
     </body>
 </html>
