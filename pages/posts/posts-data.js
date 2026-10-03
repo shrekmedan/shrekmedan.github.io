@@ -21,7 +21,7 @@ const BLOG_POSTS = [
         id: "002",
         title: "Seni Menjelaskan Hal Rumit (Catatan Guru Matematika)",
         date: "04.09.2026",
-        tag: "MATEMATIKA",
+        tag: "EDUKASI",
         readTime: "4 min baca",
         excerpt: "Mengajar matematika di kelas dan debugging kode memiliki satu benang merah yang sama: keduanya menuntut kita melacak alur logika dari dasar. Saat murid trauma dengan rumus, kesalahannya kerap terletak pada instruksi yang terlalu abstrak.",
         file: "posts/002-seni-menjelaskan.html"
