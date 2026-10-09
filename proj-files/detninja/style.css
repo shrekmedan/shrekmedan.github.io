@@ -1,19 +1,43 @@
+/* =========================================================================
+   FRUIT NINJA DOJO - NINJA DETERMINAN MATRIKS
+   High-Energy Juicy Arcade Theme with 3D Wood, Glossy Fruit & Blade Trails
+   ========================================================================= */
+
 :root {
-  --ninja-black: #08090d;
-  --ninja-bg: #0d0f17;
-  --panel-bg: #131722;
-  --card-bg: #181d2c;
-  --parchment: #1a1e2b;
-  --border-gold: #c5a059;
-  --border-subtle: #2a3449;
-  --katana-blue: #00d2ff;
-  --katana-blue-glow: rgba(0, 210, 255, 0.45);
-  --crimson: #e63946;
-  --crimson-glow: rgba(230, 57, 70, 0.45);
-  --gold: #d4af37;
-  --gold-glow: rgba(212, 175, 55, 0.45);
-  --steel: #e2e8f0;
-  --text-muted: #8892b0;
+  /* Dojo Wood Palette */
+  --wood-darkest: #130a05;
+  --wood-dark: #1f1108;
+  --wood-plank: #2d180c;
+  --wood-medium: #3d2112;
+  --wood-light: #522d19;
+  --wood-bevel: #723e23;
+  --wood-border: #8b4e2b;
+  --wood-highlight: rgba(255, 205, 150, 0.18);
+
+  /* Fruit Ninja Juicy Accents */
+  --fruit-watermelon: #2ecc71;
+  --fruit-watermelon-dark: #27ae60;
+  --fruit-watermelon-glow: rgba(46, 204, 113, 0.5);
+
+  --fruit-crimson: #ff2a5f;
+  --fruit-crimson-dark: #d81159;
+  --fruit-crimson-glow: rgba(255, 42, 95, 0.55);
+
+  --fruit-cyan: #00d2ff;
+  --fruit-cyan-dark: #0096c7;
+  --fruit-cyan-glow: rgba(0, 210, 255, 0.55);
+
+  --fruit-orange: #ff9f1c;
+  --fruit-gold: #f59e0b;
+  --fruit-gold-light: #fbbf24;
+  --fruit-gold-glow: rgba(245, 158, 11, 0.5);
+
+  --gold-brass: #e5a93c;
+  --brass-dark: #8c5817;
+
+  --steel: #fffdfa;
+  --text-muted: #d8b896;
+  --text-subtle: #a08060;
 }
 
 * {
@@ -23,15 +47,16 @@
   touch-action: none;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Outfit', 'Segoe UI', system-ui, sans-serif;
 }
 
 body {
-  background: var(--ninja-black);
+  background-color: var(--wood-darkest);
   background-image: 
-    radial-gradient(circle at 50% 20%, rgba(30, 41, 64, 0.35) 0%, transparent 70%),
-    linear-gradient(rgba(10, 12, 18, 0.95), rgba(10, 12, 18, 0.95)),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 16px);
+    radial-gradient(circle at 50% 32%, rgba(255, 175, 75, 0.16) 0%, transparent 68%),
+    linear-gradient(rgba(19, 10, 5, 0.88), rgba(19, 10, 5, 0.94)),
+    repeating-linear-gradient(0deg, #2b170c 0px, #2b170c 76px, #150904 77px, #150904 80px),
+    repeating-linear-gradient(90deg, rgba(255, 180, 100, 0.02) 0px, rgba(255, 180, 100, 0.02) 2px, transparent 2px, transparent 40px);
   color: var(--steel);
   width: 100vw;
   height: 100vh;
@@ -41,7 +66,7 @@ body {
   position: relative;
 }
 
-/* Blade Trail & Ambient Mist Canvas */
+/* Blade Trail & Splatters Canvas */
 #slashCanvas {
   position: absolute;
   top: 0;
@@ -52,7 +77,9 @@ body {
   z-index: 100;
 }
 
-/* Floating Action Controls */
+/* =========================================================================
+   FLOATING ACTION CONTROLS (Hanging Dojo Wooden Badges)
+   ========================================================================= */
 .floating-controls {
   position: absolute;
   top: 14px;
@@ -60,8 +87,8 @@ body {
   display: flex;
   gap: 12px;
   z-index: 150;
-  opacity: 0.45;
-  transition: opacity 0.2s ease;
+  opacity: 0.65;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .floating-controls:hover,
@@ -70,52 +97,59 @@ body {
 }
 
 .btn-float {
-  width: 42px;
-  height: 42px;
-  border-radius: 6px;
-  background: rgba(18, 22, 34, 0.9);
-  border: 1px solid var(--border-gold);
-  color: var(--border-gold);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #4a2815, #2b160b);
+  border: 2px solid var(--gold-brass);
+  color: var(--fruit-gold-light);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-  transition: transform 0.15s, border-color 0.15s, color 0.15s;
+  box-shadow: 0 5px 0 #140803, 0 8px 16px rgba(0,0,0,0.7);
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .btn-float svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   stroke: currentColor;
-  stroke-width: 2.2;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
 }
 
 .btn-float:active {
-  transform: scale(0.92);
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #140803, 0 4px 8px rgba(0,0,0,0.8);
 }
 
 .btn-float-exit:hover {
-  border-color: var(--crimson);
-  color: var(--crimson);
-  box-shadow: 0 0 12px var(--crimson-glow);
+  border-color: var(--fruit-crimson);
+  color: var(--fruit-crimson);
 }
 
 .btn-float-sound:hover {
-  border-color: var(--katana-blue);
-  color: var(--katana-blue);
-  box-shadow: 0 0 12px var(--katana-blue-glow);
+  border-color: var(--fruit-cyan);
+  color: var(--fruit-cyan);
 }
 
 .btn-float-sound.sound-muted {
-  border-color: #475569;
-  color: #64748b;
-  opacity: 0.6;
+  border-color: #634b38;
+  color: #8c7059;
+  opacity: 0.7;
 }
 
-/* Splash Sound Button */
+.btn-float-sound.sound-muted:hover {
+  border-color: var(--fruit-gold-light);
+  color: var(--fruit-gold-light);
+  opacity: 1;
+}
+
+/* Splash Sound Button (Identical arcade styling to in-game sound button) */
 .splash-sound-btn {
   position: absolute;
   top: 18px;
@@ -123,50 +157,68 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   padding: 0;
-  background: rgba(18, 22, 34, 0.85);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
+  background: linear-gradient(180deg, #4a2815, #2b160b);
+  border: 2px solid var(--gold-brass);
+  color: var(--fruit-gold-light);
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-  transition: all 0.2s ease;
+  box-shadow: 0 5px 0 #140803, 0 8px 16px rgba(0,0,0,0.7);
+  transition: transform 0.1s, box-shadow 0.1s, color 0.15s, border-color 0.15s;
   z-index: 310;
 }
 
+.splash-sound-btn svg,
 .splash-sound-btn .btn-svg-icon {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
 }
 
 .splash-sound-btn:hover {
-  background: rgba(28, 35, 54, 0.95);
-  border-color: #ffd700;
-  box-shadow: 0 0 14px var(--gold-glow);
+  border-color: var(--fruit-cyan);
+  color: var(--fruit-cyan);
+  box-shadow: 0 5px 0 #140803, 0 8px 18px rgba(0, 210, 255, 0.35);
 }
 
 .splash-sound-btn:active {
-  transform: scale(0.96);
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #140803, 0 4px 8px rgba(0,0,0,0.8);
 }
 
 .splash-sound-btn.sound-muted {
-  border-color: #475569;
-  color: #94a3b8;
-  background: rgba(15, 23, 42, 0.7);
-  box-shadow: none;
+  border-color: #634b38;
+  color: #8c7059;
+  opacity: 0.7;
 }
 
-/* SPLASH SCREEN OVERLAY */
+.splash-sound-btn.sound-muted:hover {
+  border-color: var(--fruit-gold-light);
+  color: var(--fruit-gold-light);
+  opacity: 1;
+}
+
+/* =========================================================================
+   SPLASH SCREEN (Fruit Ninja Dojo Menu with Sliced Wood Title)
+   ========================================================================= */
 .splash-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, #141824 0%, #06070a 100%);
+  background-color: var(--wood-darkest);
+  background-image: 
+    radial-gradient(circle at 50% 28%, rgba(255, 170, 65, 0.22) 0%, transparent 65%),
+    linear-gradient(rgba(18, 9, 4, 0.86), rgba(18, 9, 4, 0.94)),
+    repeating-linear-gradient(0deg, #2c180d 0px, #2c180d 78px, #140803 79px, #140803 82px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,237 +230,236 @@ body {
 
 .splash-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  position: relative;
 }
 
-.splash-badge {
-  display: inline-block;
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  padding: 4px 14px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
+/* Fruit Ninja Arcade Title */
 .splash-title {
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: #fff;
-  margin-bottom: 6px;
+  font-family: 'Lilita One', 'Shojumaru', cursive, sans-serif;
+  font-size: 46px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff4d1;
+  text-shadow: 
+    0 4px 0 #944a17,
+    0 8px 0 #522207,
+    0 12px 24px rgba(0, 0, 0, 0.95),
+    0 0 25px rgba(255, 175, 55, 0.35);
+  margin-bottom: 4px;
+  display: inline-block;
 }
 
 .splash-subtitle {
-  font-size: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
   color: var(--text-muted);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 0.5px;
 }
 
-/* SPLASH SINGLE UNIFIED CARD */
+/* SPLASH UNIFIED CARVED DOJO BOARD */
 .splash-single-card {
   width: 100%;
   max-width: 520px;
   margin: auto 0;
-  background: linear-gradient(180deg, #181d2b 0%, #10131d 100%);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+  background: linear-gradient(180deg, #3d2214 0%, #29150b 100%);
+  border: 3px solid #844c2c;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 
+    0 18px 45px rgba(0,0,0,0.92),
+    inset 0 2px 0 var(--wood-highlight),
+    inset 0 -3px 0 rgba(0,0,0,0.6);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
-.splash-single-card::before {
+/* Brass Rivets on Dojo Board Corners */
+.splash-single-card::before,
+.splash-single-card::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 24px;
-  right: 24px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffd166 0%, #b87333 80%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.8);
 }
+.splash-single-card::before { top: 10px; left: 10px; }
+.splash-single-card::after { top: 10px; right: 10px; }
 
 .splash-practice-block {
-  background: rgba(13, 15, 23, 0.6);
-  border: 1px solid rgba(0, 119, 182, 0.25);
-  border-radius: 8px;
-  padding: 16px 18px;
+  background: rgba(18, 9, 4, 0.68);
+  border: 1.5px solid rgba(132, 76, 44, 0.45);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.splash-serious-block {
+  background: rgba(18, 9, 4, 0.68);
+  border: 1.5px solid rgba(132, 76, 44, 0.45);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .splash-block-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex: 1;
 }
 
 .splash-block-title {
-  font-size: 18px;
-  font-weight: 800;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 19px;
   letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .splash-block-desc {
   font-size: 13px;
   color: var(--text-muted);
-  line-height: 1.4;
+  font-weight: 600;
 }
 
 .splash-card-divider {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 0;
   gap: 12px;
 }
 
 .divider-line {
   flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #2a3449, transparent);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #844c2c, transparent);
 }
 
 .divider-text {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: var(--steel);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--gold-brass);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-.splash-serious-block {
-  background: rgba(13, 15, 23, 0.6);
-  border: 1px solid rgba(208, 0, 0, 0.25);
-  border-radius: 8px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* 3D JUICY ARCADE BUTTONS */
+.splash-btn-start {
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 2px solid transparent;
+  color: #fff;
+  white-space: nowrap;
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
+.btn-start-practice {
+  background: linear-gradient(180deg, #00b4d8, #0077b6);
+  border-color: #90e0ef;
+  box-shadow: 0 5px 0 #023e8a, 0 8px 18px rgba(0,0,0,0.7);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  min-width: 140px;
+}
+
+.btn-start-practice:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #023e8a, 0 4px 8px rgba(0,0,0,0.7);
+}
+
+.btn-start-play {
+  width: 100%;
+  margin-top: 4px;
+  padding: 14px 20px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  background: linear-gradient(180deg, #ff3366, #d81159);
+  border-color: #ff8da1;
+  box-shadow: 0 6px 0 #8b0029, 0 10px 22px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.btn-start-play:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #8b0029, 0 4px 10px rgba(0,0,0,0.8);
+}
+
+/* Player Name Inputs & Row Alignment */
 .name-input-group {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .name-input-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.name-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--border-gold);
-}
-
-.name-input {
-  background: #0d0f17;
-  border: 1px solid #2d3748;
-  border-radius: 6px;
-  color: #fff;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.name-input:focus {
-  border-color: var(--border-gold);
-}
-
-.name-input:disabled {
-  opacity: 0.42;
-  background: #080a10;
-  border-color: #1e2638;
-  color: var(--text-muted);
-  cursor: not-allowed;
 }
 
 .label-with-switch {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  min-height: 26px;
+  margin-bottom: 6px;
 }
 
-/* Time Attack Group & Tabs */
-.time-attack-group {
-  background: rgba(18, 22, 34, 0.85);
-  border: 1px solid #2a3449;
+.name-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.name-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #190d07;
+  border: 1.5px solid #6b3e24;
   border-radius: 8px;
-  padding: 12px 14px;
-}
-
-.time-attack-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.time-attack-label {
-  font-size: 12px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14.5px;
   font-weight: 700;
-  color: #fff;
-  display: block;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.7);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.time-attack-hint {
-  font-size: 11px;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 2px;
+.name-input:focus {
+  border-color: var(--gold-brass);
+  box-shadow: 0 0 10px var(--fruit-gold-glow), inset 0 2px 4px rgba(0,0,0,0.7);
 }
 
-.time-attack-options {
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px dashed #2a3449;
+.name-input:disabled {
+  opacity: 0.4;
+  background: #120804;
+  border-color: #422515;
+  color: #8c7059;
+  cursor: not-allowed;
 }
 
-.time-type-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.btn-time-tab {
-  flex: 1;
-  padding: 7px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  border-radius: 6px;
-  border: 1px solid #2a3449;
-  background: #10141f;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-time-tab:hover {
-  border-color: var(--border-gold);
-  color: #fff;
-}
-
-.btn-time-tab.active {
-  background: rgba(208, 0, 0, 0.25);
-  border-color: var(--crimson);
-  color: #fff;
-  box-shadow: 0 0 10px rgba(208, 0, 0, 0.35);
-}
-
+/* Bamboo Wooden Toggle Switch */
 .switch {
   position: relative;
   display: inline-block;
-  width: 42px;
+  width: 44px;
   height: 22px;
   flex-shrink: 0;
 }
@@ -422,11 +473,11 @@ body {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #273147;
-  transition: 0.2s;
+  inset: 0;
+  background-color: #201007;
+  border: 1.5px solid #66381e;
+  transition: 0.25s;
   border-radius: 22px;
-  border: 1px solid #3e4c6d;
 }
 
 .slider:before {
@@ -434,101 +485,177 @@ body {
   content: "";
   height: 14px;
   width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: #fff;
-  transition: 0.2s;
+  left: 2px;
+  bottom: 2px;
+  background: linear-gradient(180deg, #fce8cd, #c99355);
   border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  transition: 0.25s;
 }
 
-.switch input:checked + .slider {
-  background-color: var(--crimson);
-  border-color: var(--crimson);
+input:checked + .slider {
+  background-color: var(--fruit-watermelon-dark);
+  border-color: var(--fruit-watermelon);
 }
 
-.switch input:checked + .slider:before {
-  transform: translateX(20px);
+input:checked + .slider:before {
+  transform: translateX(22px);
+  background: #ffffff;
+}
+
+/* Time Attack Group & Controls */
+.time-attack-group {
+  background: rgba(18, 9, 4, 0.7);
+  border: 1.5px solid rgba(132, 76, 44, 0.45);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.time-attack-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-attack-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.time-attack-label {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+.time-attack-hint {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--fruit-gold-light);
+}
+
+.time-attack-options {
+  border-top: 1px dashed rgba(132, 76, 44, 0.5);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-type-tabs {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-time-tab {
+  flex: 1 1 50%;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, #2d180d, #1c0e07);
+  border: 1.5px solid #66381e;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 0 #120703;
+}
+
+.btn-time-tab:hover {
+  background: linear-gradient(180deg, #3d2112, #26130a);
+  color: #fff;
+  border-color: #8c4c28;
+}
+
+.btn-time-tab.active {
+  background: var(--gold-brass);
+  color: #140803;
+  border-color: #ffe066;
+  box-shadow: 0 3px 0 #8f6000, 0 4px 10px rgba(255, 180, 0, 0.35);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .time-adjuster {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed #2a3449;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  background: #140803;
+  border: 1.5px solid #4a2814;
+  border-radius: 8px;
+  padding: 8px 14px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .adjuster-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--fruit-wood-light);
+  white-space: nowrap;
 }
 
 .adjuster-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .btn-adjust {
-  width: 28px;
-  height: 28px;
-  background: #1c2232;
-  border: 1px solid #3a4768;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(180deg, #59311a, #361b0c);
+  border: 1.5px solid #854926;
+  border-radius: 8px;
+  color: #fff2cc;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 20px;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 3px 0 #130702;
+  transition: all 0.1s;
+  user-select: none;
+}
+
+.btn-adjust:hover {
+  background: linear-gradient(180deg, #6e3d20, #45230f);
+  color: #fff;
+  border-color: #a45a2f;
 }
 
 .btn-adjust:active {
-  transform: scale(0.92);
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #130702;
 }
 
 .adjust-val {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--gold);
-  min-width: 65px;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 16px;
+  color: var(--fruit-gold-light);
+  min-width: 72px;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.5px;
 }
 
-.splash-btn-start {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: 1px solid transparent;
-  color: #fff;
-  transition: opacity 0.2s, transform 0.1s;
-}
-
-.splash-btn-start:active {
-  transform: scale(0.98);
-}
-
-.btn-start-practice {
-  background: linear-gradient(135deg, #0077b6, #0096c7);
-  border-color: var(--katana-blue);
-  box-shadow: 0 4px 16px var(--katana-blue-glow);
-}
-
-.btn-start-play {
-  background: linear-gradient(135deg, #9d0208, #d00000);
-  border-color: var(--crimson);
-  box-shadow: 0 4px 16px var(--crimson-glow);
-}
-
-/* Main Viewport */
+/* =========================================================================
+   MAIN VIEWPORT & ARENA LAYOUTS
+   ========================================================================= */
 #mainViewport {
   flex: 1;
   display: flex;
@@ -536,7 +663,6 @@ body {
   overflow: hidden;
 }
 
-/* Solo View */
 .solo-layout {
   flex: 1;
   display: flex;
@@ -548,97 +674,12 @@ body {
   transition: box-shadow 0.25s ease;
 }
 
-.solo-layout .player-header {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 440px;
-  z-index: 100;
-  margin-bottom: 0;
-}
-
-#soloTimerContainer {
-  position: absolute;
-  top: 66px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  margin-bottom: 0;
-}
-
-.solo-layout .status-banner {
-  margin-top: 55px;
-  margin-bottom: 6px;
-}
-
-.solo-layout .arena-content {
-  margin-top: 15px;
-}
-
-/* 1 vs 1 Side by Side View */
 .versus-layout {
   flex: 1;
   display: none;
   width: 100%;
   height: 100%;
   position: relative;
-}
-
-/* Versus Time Attack Countdown Bar */
-.versus-timer-container {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 140;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 150px;
-}
-
-.versus-timer-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(18, 22, 34, 0.95);
-  border: 1px solid var(--border-gold);
-  border-radius: 20px;
-  padding: 3px 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-}
-
-.timer-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-}
-
-.timer-val {
-  font-size: 15px;
-  font-weight: 900;
-  color: var(--gold);
-  min-width: 22px;
-  text-align: center;
-}
-
-.versus-timer-bar-track {
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.versus-timer-bar-fill {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, var(--katana-blue), var(--crimson));
-  transition: width 0.2s linear;
 }
 
 .versus-col {
@@ -653,43 +694,23 @@ body {
   transition: box-shadow 0.25s ease;
 }
 
-.versus-col .player-header {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 440px;
-  z-index: 100;
-  margin-bottom: 0;
-}
-
-.versus-col .arena-content {
-  margin-top: 45px;
-}
-
 .versus-col-left {
-  border-right: 2px solid rgba(197, 160, 89, 0.2);
-  background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.03) 0%, transparent 70%);
+  border-right: 3px solid rgba(132, 76, 44, 0.4);
 }
 
-.versus-col-right {
-  background: radial-gradient(circle at 50% 30%, rgba(230, 57, 70, 0.03) 0%, transparent 70%);
-}
-
-/* FEEDBACK FLASH (Green = Benar, Red = Salah) */
-@keyframes playerFlashGreen {
+/* FLASH FEEDBACK (Juicy Green = Benar, Juicy Red = Salah) */
+@keyframes fruitFlashGreen {
   0% {
-    box-shadow: inset 0 0 100px rgba(34, 197, 94, 0.65), inset 0 0 25px rgba(34, 197, 94, 0.85);
+    box-shadow: inset 0 0 120px rgba(46, 204, 113, 0.8), inset 0 0 30px rgba(46, 204, 113, 0.95);
   }
   100% {
     box-shadow: inset 0 0 0 transparent;
   }
 }
 
-@keyframes playerFlashRed {
+@keyframes fruitFlashRed {
   0% {
-    box-shadow: inset 0 0 100px rgba(239, 68, 68, 0.7), inset 0 0 25px rgba(239, 68, 68, 0.85);
+    box-shadow: inset 0 0 120px rgba(255, 42, 95, 0.85), inset 0 0 30px rgba(255, 42, 95, 0.95);
   }
   100% {
     box-shadow: inset 0 0 0 transparent;
@@ -697,42 +718,52 @@ body {
 }
 
 .player-flash-success {
-  animation: playerFlashGreen 0.45s ease-out forwards !important;
+  animation: fruitFlashGreen 0.48s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important;
 }
 
 .player-flash-danger {
-  animation: playerFlashRed 0.45s ease-out forwards !important;
+  animation: fruitFlashRed 0.48s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important;
 }
 
-/* Player Header */
+/* =========================================================================
+   PLAYER HEADER & FRUIT NINJA LIVES
+   ========================================================================= */
 .player-header {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 440px;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 440px;
   padding: 8px 16px;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #161a26, #0e111a);
-  border: 1px solid var(--border-gold);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #422515, #29150b);
+  border: 2px solid #844c2c;
+  box-shadow: 
+    0 5px 0 #150904,
+    0 8px 18px rgba(0,0,0,0.7),
+    inset 0 1px 0 var(--wood-highlight);
 }
 
 .player-name-wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: default;
 }
 
 .player-name {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-.player-name-p1 { color: var(--katana-blue); }
-.player-name-p2 { color: var(--crimson); }
+.player-name-p1 { color: var(--fruit-cyan); }
+.player-name-p2 { color: var(--fruit-crimson); }
 
 .player-stats {
   display: flex;
@@ -740,13 +771,20 @@ body {
   align-items: center;
 }
 
+/* Fruit Ninja Papan Skor Tablet */
 .score-chip {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.8px;
+  color: var(--fruit-gold-light);
+  background: #190c06;
+  border: 1.5px solid var(--gold-brass);
+  border-radius: 16px;
+  padding: 3px 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 2px 6px rgba(0,0,0,0.5);
 }
 
-/* SHURIKEN LIVES INDICATOR */
+/* Fruit Ninja Lives (Watermelon Slices & Strike X) */
 .lives-box {
   display: flex;
   align-items: center;
@@ -754,7 +792,7 @@ body {
 }
 
 .lives-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--text-muted);
@@ -763,70 +801,111 @@ body {
 
 .lives-shurikens {
   display: flex;
-  gap: 5px;
+  gap: 6px;
+  align-items: center;
 }
 
-.shuriken-icon {
-  width: 17px;
-  height: 17px;
-  color: var(--border-gold);
-  filter: drop-shadow(0 0 3px var(--gold-glow));
-  transition: transform 0.25s, opacity 0.25s, color 0.25s;
+.fruit-life-icon {
+  width: 21px;
+  height: 21px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.75));
+  transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.25s;
 }
 
-.shuriken-lost {
-  color: #334155 !important;
-  filter: none !important;
-  opacity: 0.25;
-  transform: scale(0.75) rotate(45deg);
+.fruit-life-lost {
+  animation: strikeSlashAnim 0.35s ease-out forwards;
+  filter: drop-shadow(0 0 6px rgba(255, 42, 95, 0.8)) !important;
 }
 
-/* Status Banner (Solo Mode Only) */
-.status-banner {
-  text-align: center;
-  margin-bottom: 12px;
-  min-height: 46px;
+@keyframes strikeSlashAnim {
+  0% { transform: scale(1.6) rotate(-15deg); }
+  50% { transform: scale(0.9) rotate(8deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
-.step-tag {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
+/* =========================================================================
+   TIME ATTACK COUNTDOWN TIMER (Juicy Fruit Fluid Bar)
+   ========================================================================= */
+.versus-timer-container {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 140;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 150px;
+}
+
+#soloTimerContainer {
+  position: absolute;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.versus-timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #3d2112, #241309);
+  border: 1.5px solid var(--gold-brass);
+  border-radius: 20px;
+  padding: 3px 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+}
+
+.timer-label {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 11px;
   letter-spacing: 1px;
-  padding: 3px 12px;
-  border-radius: 4px;
-  margin-bottom: 4px;
+  color: var(--text-muted);
 }
 
-.step-blue {
-  background: rgba(0, 210, 255, 0.12);
-  border: 1px solid var(--katana-blue);
-  color: var(--katana-blue);
-  box-shadow: 0 0 10px var(--katana-blue-glow);
+.timer-val {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 16px;
+  color: var(--fruit-gold-light);
 }
 
-.step-red {
-  background: rgba(230, 57, 70, 0.12);
-  border: 1px solid var(--crimson);
-  color: var(--crimson);
-  box-shadow: 0 0 10px var(--crimson-glow);
+.versus-timer-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #140803;
+  border: 1.5px solid #66381e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
 }
 
-.step-amber {
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
-  box-shadow: 0 0 10px var(--gold-glow);
+.versus-timer-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--fruit-cyan), var(--fruit-watermelon));
+  border-radius: 8px;
+  transition: width 0.3s ease, background 0.3s ease;
+  box-shadow: 0 0 10px var(--fruit-cyan-glow);
 }
 
-.instruction {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--steel);
+/* =========================================================================
+   MATRIX BOARD & 3D FRUIT TARGETS
+   ========================================================================= */
+.solo-layout .status-banner {
+  margin-top: 55px;
+  margin-bottom: 6px;
 }
 
-/* Arena Row */
+.solo-layout .arena-content {
+  margin-top: 15px;
+}
+
+.versus-col .arena-content {
+  margin-top: 45px;
+}
+
 .arena-content {
   display: flex;
   flex-direction: column;
@@ -836,42 +915,44 @@ body {
   max-width: 440px;
 }
 
-/* MATRIX BOARD */
+/* Carved Dojo Cutting Block */
 .matrix-board {
   position: relative;
-  background: radial-gradient(circle at center, #1b202e 0%, #0f121b 100%);
-  border: 2px solid var(--border-gold);
-  border-radius: 10px;
+  background: linear-gradient(145deg, #361f12, #1f1008);
+  border: 3.5px solid #844c2c;
+  border-radius: 18px;
   padding: 16px;
-  width: 270px;
-  height: 270px;
+  width: 275px;
+  height: 275px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 
-    0 12px 36px rgba(0,0,0,0.8),
-    inset 0 0 20px rgba(0,0,0,0.6);
+    0 18px 45px rgba(0,0,0,0.92),
+    inset 0 2px 6px var(--wood-highlight),
+    inset 0 -3px 8px rgba(0,0,0,0.7);
   transition: transform 0.15s, border-color 0.2s;
 }
 
+/* Brass Corner Plates with Rivets */
 .matrix-board::before,
 .matrix-board::after {
   content: '';
   position: absolute;
   top: -6px;
   bottom: -6px;
-  width: 8px;
-  background: linear-gradient(180deg, #3d241e, #1a0f0d);
-  border: 1px solid var(--border-gold);
-  border-radius: 3px;
+  width: 10px;
+  background: linear-gradient(180deg, #e5a93c, #945719);
+  border: 1px solid #ffd166;
+  border-radius: 4px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.8);
 }
-
-.matrix-board::before { left: -8px; }
-.matrix-board::after { right: -8px; }
+.matrix-board::before { left: -9px; }
+.matrix-board::after { right: -9px; }
 
 .board-shake {
   animation: shakeAnim 0.35s ease;
-  border-color: var(--crimson) !important;
+  border-color: var(--fruit-crimson) !important;
 }
 
 @keyframes shakeAnim {
@@ -891,91 +972,123 @@ body {
   padding: 8px;
 }
 
+/* Bamboo/Gold Matrix Brackets */
 .matrix-grid::before, .matrix-grid::after {
   content: '';
   position: absolute;
   top: 4px;
   bottom: 4px;
   width: 10px;
-  border: 2px solid var(--border-gold);
+  border: 2px solid var(--gold-brass);
 }
+.matrix-grid::before { left: 0; border-right: none; }
+.matrix-grid::after { right: 0; border-left: none; }
 
-.matrix-grid::before {
-  left: 0;
-  border-right: none;
-}
-
-.matrix-grid::after {
-  right: 0;
-  border-left: none;
-}
-
-/* Matrix Node */
+/* 3D GLOSSY FRUIT TARGET MEDALLION */
 .node {
-  background: linear-gradient(145deg, #1c2232, #121622);
-  border: 2px solid #2e3952;
-  border-radius: 8px;
+  background: radial-gradient(circle at 35% 30%, #3e2617 0%, #24140b 70%, #150904 100%);
+  border: 2.5px solid #844c2c;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 26px;
-  font-weight: 800;
-  color: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  box-shadow: 
+    0 6px 14px rgba(0,0,0,0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+    inset 0 -3px 4px rgba(0,0,0,0.6);
+  transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), border-color 0.2s, background 0.2s;
+  overflow: hidden;
+}
+
+/* Glossy reflection curve on top of fruit */
+.node::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  right: 8px;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 100%);
+  border-radius: 12px 12px 40px 40px;
+  pointer-events: none;
 }
 
 .node-idx {
   position: absolute;
-  top: 4px;
+  top: 5px;
   left: 6px;
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--border-gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 11px;
+  color: #140803;
+  background: var(--gold-brass);
+  border-radius: 4px;
+  padding: 1px 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.8);
   text-transform: uppercase;
 }
 
+.node-val {
+  position: relative;
+  z-index: 2;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 34px;
+  color: #ffffff;
+  text-shadow: 
+    0 3px 0 rgba(0,0,0,0.95),
+    0 5px 12px rgba(0,0,0,0.85);
+  line-height: 1;
+}
+
+/* SLICED FRUIT STATES (Clean Vivid Pulp without Obstructing Numbers) */
 .node-done-blue {
-  border-color: var(--katana-blue) !important;
-  color: var(--katana-blue) !important;
-  background: rgba(0, 210, 255, 0.12) !important;
-  box-shadow: 0 0 16px var(--katana-blue-glow) !important;
+  background: radial-gradient(circle at 35% 30%, #00b4d8 0%, #0077b6 65%, #023e8a 100%) !important;
+  border-color: #90e0ef !important;
+  box-shadow: 
+    0 0 24px var(--fruit-cyan-glow),
+    inset 0 0 12px rgba(255,255,255,0.45) !important;
+  transform: scale(1.03);
 }
 
 .node-done-red {
-  border-color: var(--crimson) !important;
-  color: var(--crimson) !important;
-  background: rgba(230, 57, 70, 0.12) !important;
-  box-shadow: 0 0 16px var(--crimson-glow) !important;
+  background: radial-gradient(circle at 35% 30%, #ff3366 0%, #d81159 65%, #8b0029 100%) !important;
+  border-color: #ff8da1 !important;
+  box-shadow: 
+    0 0 24px var(--fruit-crimson-glow),
+    inset 0 0 12px rgba(255,255,255,0.45) !important;
+  transform: scale(1.03);
 }
 
-/* Calculation Tray */
+/* =========================================================================
+   CALCULATION TRAY (Carved Wooden Scroll Tray)
+   ========================================================================= */
 .calc-tray {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #11141e;
-  border: 1px solid var(--border-gold);
-  border-radius: 6px;
+  background: linear-gradient(180deg, #321c10, #1f1008);
+  border: 2px solid #844c2c;
+  border-radius: 10px;
   padding: 6px 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 
+    0 6px 16px rgba(0,0,0,0.7),
+    inset 0 1px 0 var(--wood-highlight);
 }
 
 .tray-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3px 8px;
-  border-radius: 4px;
-  min-width: 65px;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  padding: 4px 10px;
+  border-radius: 6px;
+  min-width: 68px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .tray-box-focus {
-  border: 2px solid var(--gold) !important;
-  box-shadow: 0 0 10px var(--gold-glow) !important;
+  border: 2px solid var(--fruit-gold-light) !important;
+  box-shadow: 0 0 14px var(--fruit-gold-glow) !important;
   animation: pulseTray 1.4s infinite;
 }
 
@@ -985,77 +1098,69 @@ body {
 }
 
 .tray-box-label {
-  font-size: 9px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 9.5px;
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  opacity: 0.85;
   margin-bottom: 1px;
 }
 
 .tray-box-val {
-  font-size: 16px;
-  font-weight: 800;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.5px;
 }
 
 .tray-blue {
-  background: rgba(0, 210, 255, 0.1);
-  border: 1px solid var(--katana-blue);
-  color: var(--katana-blue);
+  background: rgba(0, 180, 216, 0.18);
+  border: 1.5px solid var(--fruit-cyan);
+  color: var(--fruit-cyan);
 }
 
 .tray-red {
-  background: rgba(230, 57, 70, 0.1);
-  border: 1px solid var(--crimson);
-  color: var(--crimson);
+  background: rgba(255, 51, 102, 0.18);
+  border: 1.5px solid var(--fruit-crimson);
+  color: var(--fruit-crimson);
 }
 
 .tray-amber {
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
+  background: rgba(245, 158, 11, 0.18);
+  border: 1.5px solid var(--gold-brass);
+  color: var(--fruit-gold-light);
 }
 
 .tray-op {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--border-gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 18px;
+  color: var(--gold-brass);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* NUMPAD SYSTEM */
+/* =========================================================================
+   NUMPAD SYSTEM (Carved 3D Tactile Wooden Arcade Keys)
+   ========================================================================= */
 .numpad-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 290px;
-  background: #11141e;
-  border: 1px solid var(--border-gold);
-  border-radius: 8px;
+  max-width: 295px;
+  background: linear-gradient(180deg, #321c10, #1f1008);
+  border: 2px solid #844c2c;
+  border-radius: 12px;
   padding: 10px;
   gap: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-  transition: opacity 0.25s ease, filter 0.25s ease, border-color 0.25s ease;
+  box-shadow: 
+    0 10px 25px rgba(0,0,0,0.85),
+    inset 0 1px 0 var(--wood-highlight);
+  transition: opacity 0.25s ease, filter 0.25s ease;
 }
 
 .numpad-panel.numpad-disabled {
   opacity: 0.35;
   filter: grayscale(0.6);
   pointer-events: none;
-  border-color: rgba(60, 75, 105, 0.4);
-}
-
-.numpad-panel.numpad-disabled .numpad-key,
-.numpad-panel.numpad-disabled .numpad-key-enter {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.numpad-backspace-svg {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-  display: block;
 }
 
 .numpad-display-box {
@@ -1063,415 +1168,450 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #090b10;
-  border: 1px solid #2a3449;
-  border-radius: 6px;
+  background: #150904;
+  border: 1.5px solid #57301a;
+  border-radius: 8px;
   padding: 6px 12px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
 }
 
 .numpad-display-label {
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--border-gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  color: var(--gold-brass);
   text-transform: uppercase;
 }
 
 .numpad-display-val {
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 22px;
+  color: var(--fruit-gold-light);
   letter-spacing: 2px;
   min-width: 48px;
   text-align: right;
+  text-shadow: 0 0 10px var(--fruit-gold-glow);
 }
 
 .numpad-grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 7px;
 }
 
+/* 3D Carved Wooden Arcade Keys */
 .numpad-key {
-  height: 42px;
-  background: #1a2030;
-  border: 1px solid #2d3748;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 800;
+  height: 44px;
+  background: linear-gradient(180deg, #4d2b17, #321a0d);
+  border: 1px solid #7c4426;
+  border-radius: 8px;
+  color: #fff2cc;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 21px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.1s, border-color 0.1s, transform 0.05s;
+  box-shadow: 0 5px 0 #130702, 0 7px 12px rgba(0,0,0,0.65);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  transition: transform 0.06s, box-shadow 0.06s;
 }
 
 .numpad-key:active {
-  background: #273147;
-  border-color: var(--border-gold);
-  transform: scale(0.96);
+  transform: translateY(3.5px);
+  box-shadow: 0 1.5px 0 #130702, 0 3px 6px rgba(0,0,0,0.7);
 }
 
 .numpad-key-action {
-  background: #141724;
+  background: linear-gradient(180deg, #3d2112, #241309);
   color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 16px;
+}
+
+.numpad-backspace-svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
 }
 
 .numpad-enter-row {
   width: 100%;
 }
 
+/* Big Juicy Green Watermelon "Jawab" Button */
 .numpad-key-enter {
   width: 100%;
-  height: 42px;
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 800;
+  height: 44px;
+  background: linear-gradient(180deg, #2ecc71, #27ae60);
+  border: 1.5px solid #58d68d;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, transform 0.05s;
+  box-shadow: 0 5px 0 #196f3d, 0 8px 16px rgba(0,0,0,0.7);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  transition: transform 0.06s, box-shadow 0.06s;
 }
 
 .numpad-key-enter:active {
-  background: rgba(212, 175, 55, 0.3);
-  transform: scale(0.98);
+  transform: translateY(3.5px);
+  box-shadow: 0 1.5px 0 #196f3d, 0 3px 6px rgba(0,0,0,0.7);
 }
 
-/* FLOATING NOTIFICATION (Side Toast) */
+/* =========================================================================
+   STATUS BANNER & SIDE TOASTS
+   ========================================================================= */
+.status-banner {
+  text-align: center;
+  margin-bottom: 12px;
+  min-height: 46px;
+}
+
+.step-tag {
+  display: inline-block;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 14px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.step-blue {
+  background: var(--fruit-cyan);
+  color: #04212b;
+}
+
+.step-red {
+  background: var(--fruit-crimson);
+  color: #fff;
+}
+
+.step-amber {
+  background: var(--gold-brass);
+  color: #140803;
+}
+
+.instruction {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--steel);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
 .side-toast {
   position: absolute;
-  top: 72px;
-  width: 90%;
-  max-width: 380px;
-  background: rgba(14, 17, 26, 0.96);
-  border: 2px solid var(--crimson);
-  border-radius: 8px;
-  padding: 12px 18px;
-  z-index: 120;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 20px var(--crimson-glow);
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #3d2112, #221209);
+  border: 2px solid var(--gold-brass);
+  border-radius: 10px;
+  padding: 10px 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.9);
   display: none;
-  animation: toastSlideIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  backdrop-filter: blur(8px);
-  pointer-events: none;
+  z-index: 120;
   text-align: center;
 }
 
-.side-toast-warning {
-  border-color: var(--border-gold);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.85), 0 0 20px var(--gold-glow);
-}
-
 .side-toast-title {
-  font-size: 13px;
-  font-weight: 900;
-  color: var(--crimson);
-  margin-bottom: 4px;
-  text-transform: uppercase;
-}
-
-.side-toast-warning .side-toast-title {
-  color: var(--gold);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 15px;
+  color: var(--fruit-gold-light);
+  margin-bottom: 2px;
 }
 
 .side-toast-body {
-  font-size: 12px;
-  color: var(--steel);
-  line-height: 1.4;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
 }
 
-@keyframes toastSlideIn {
-  from { opacity: 0; transform: translateY(-16px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.side-toast-warning {
+  border-color: var(--fruit-crimson);
 }
 
-/* Player Elimination Overlay */
+.side-toast-warning .side-toast-title {
+  color: var(--fruit-crimson);
+}
+
 .side-eliminated-banner {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(8, 10, 16, 0.9);
-  backdrop-filter: blur(6px);
-  z-index: 130;
+  inset: 0;
+  background: rgba(19, 10, 5, 0.88);
+  backdrop-filter: blur(4px);
+  z-index: 110;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  text-align: center;
+  gap: 12px;
 }
 
 .eliminated-badge {
-  background: rgba(230, 57, 70, 0.15);
-  border: 2px solid var(--crimson);
-  color: var(--crimson);
-  font-size: 16px;
-  font-weight: 800;
-  padding: 8px 20px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 20px var(--crimson-glow);
+  font-family: 'Lilita One', sans-serif;
+  font-size: 28px;
+  color: var(--fruit-crimson);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.9);
 }
 
-/* GLOBAL WINNER / RESULT MODAL */
+/* =========================================================================
+   COUNTDOWN OVERLAY (3, 2, 1, TEBAS! Juicy Arcade Popup)
+   ========================================================================= */
+.countdown-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 450;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 8, 4, 0.84);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.countdown-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 300px;
+  height: 300px;
+}
+
+.countdown-aura {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.35) 0%, rgba(255, 42, 95, 0.22) 50%, transparent 75%);
+  filter: blur(28px);
+  pointer-events: none;
+  animation: countdownPulse 0.85s ease-in-out infinite alternate;
+}
+
+.countdown-watermark {
+  position: absolute;
+  font-family: 'Shojumaru', 'Lilita One', cursive;
+  font-size: 150px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.countdown-number {
+  position: relative;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 105px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 
+    0 4px 0 #0077b6,
+    0 8px 0 #023e8a,
+    0 12px 28px rgba(0, 0, 0, 0.9),
+    0 0 35px var(--fruit-cyan-glow);
+  line-height: 1;
+  margin-bottom: 12px;
+  transform-origin: center center;
+}
+
+.countdown-pop {
+  animation: countdownPopAnim 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.25) forwards;
+}
+
+.countdown-slash {
+  font-size: 70px !important;
+  color: #ffe6a7 !important;
+  letter-spacing: 4px;
+  text-shadow: 
+    0 4px 0 #9b111e,
+    0 8px 0 #5c0712,
+    0 14px 30px rgba(0, 0, 0, 0.95),
+    0 0 45px var(--fruit-crimson-glow) !important;
+  animation: countdownSlashAnim 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.35) forwards !important;
+}
+
+.countdown-subtext {
+  position: relative;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 17px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--fruit-gold-light);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+@keyframes countdownPopAnim {
+  0% { transform: scale(2.2); opacity: 0; filter: blur(8px); }
+  30% { transform: scale(1.08); opacity: 1; filter: blur(0); }
+  65% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+@keyframes countdownSlashAnim {
+  0% { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+  40% { transform: scale(1.25) rotate(2deg); opacity: 1; }
+  75% { transform: scale(1.08) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes countdownPulse {
+  0% { transform: scale(0.85); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 0.85; }
+}
+
+/* =========================================================================
+   RESULT & SESSION MODALS (Fruit Ninja Victory Scroll Tablet)
+   ========================================================================= */
 .result-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(6, 8, 14, 0.92);
-  backdrop-filter: blur(12px);
+  inset: 0;
   z-index: 500;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(15, 8, 4, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 20px;
-  animation: modalFadeIn 0.25s ease-out;
-}
-
-@keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .result-modal-box {
+  background: linear-gradient(180deg, #3d2214, #241309);
+  border: 3px solid #844c2c;
+  border-radius: 18px;
+  padding: 26px;
   width: 100%;
-  max-width: 480px;
-  background: linear-gradient(180deg, #181d2b 0%, #0d101a 100%);
-  border: 2px solid var(--border-gold);
-  border-radius: 14px;
-  padding: 28px 24px;
+  max-width: 440px;
+  box-shadow: 
+    0 20px 50px rgba(0,0,0,0.95),
+    inset 0 2px 0 var(--wood-highlight);
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.95), 0 0 35px var(--gold-glow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   position: relative;
-  animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes modalPopIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 .result-emblem-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   margin-bottom: 12px;
 }
 
 .result-emblem-circle {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 30%, #ffd700, #996515);
-  border: 2px solid #fff;
+  background: linear-gradient(180deg, #ffd166, #b87333);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.7);
 }
 
 .result-shuriken-svg {
-  width: 32px;
-  height: 32px;
-  color: #1a1e2e;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-  animation: emblemSpin 10s linear infinite;
-}
-
-@keyframes emblemSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  width: 34px;
+  height: 34px;
+  color: #190c06;
 }
 
 .result-badge-label {
-  font-size: 11px;
-  font-weight: 800;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 13px;
   letter-spacing: 2px;
-  color: var(--gold);
-  text-transform: uppercase;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid var(--border-gold);
-  padding: 3px 12px;
-  border-radius: 12px;
+  color: var(--fruit-gold-light);
+  margin-top: 6px;
 }
 
 .result-title {
-  font-size: 24px;
-  font-weight: 900;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 30px;
   letter-spacing: 1px;
-  color: #fff;
+  color: #fff2cc;
   margin-bottom: 8px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  text-shadow: 0 4px 10px rgba(0,0,0,0.8);
 }
 
 .result-desc {
-  font-size: 13px;
-  color: var(--steel);
-  line-height: 1.5;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
   margin-bottom: 18px;
-  max-width: 380px;
 }
 
-/* Versus Scoreboard Comparison */
 .result-score-comparison {
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 12px;
-  background: rgba(12, 15, 24, 0.7);
-  border: 1px solid #283348;
-  border-radius: 10px;
-  padding: 14px 12px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .result-player-col {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 6px;
-  border-radius: 8px;
-  transition: all 0.2s;
 }
 
-.result-player-col.winner-card {
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid var(--border-gold);
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+.result-player-card {
+  background: #190c06;
+  border: 1.5px solid #66381e;
+  border-radius: 12px;
+  padding: 12px;
 }
 
-.result-player-col.loser-card {
-  opacity: 0.75;
+.winner-card {
+  border-color: var(--fruit-watermelon) !important;
+  box-shadow: 0 0 16px var(--fruit-watermelon-glow) !important;
 }
 
-.result-player-name {
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  max-width: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.loser-card {
+  opacity: 0.65;
 }
 
-.result-player-score {
-  font-size: 32px;
-  font-weight: 900;
-  color: var(--gold);
-  line-height: 1;
+.result-player-score-val {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 26px;
+  color: var(--fruit-gold-light);
 }
 
-.result-player-tag {
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: #1e2538;
-  color: var(--steel);
+.result-player-name-val {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 15px;
 }
 
-.winner-card .result-player-tag {
-  background: var(--gold);
-  color: #000;
-  font-weight: 900;
-}
-
-.result-vs-divider {
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: var(--crimson);
-  opacity: 0.8;
-}
-
-/* Solo Score Summary */
-.result-solo-summary {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 22px;
-}
-
-.result-solo-score-card {
-  background: rgba(12, 15, 24, 0.8);
-  border: 1px solid var(--border-gold);
-  border-radius: 10px;
-  padding: 16px 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
-}
-
-.result-solo-label {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-}
-
-.result-solo-score {
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--gold);
-  line-height: 1.1;
-}
-
-.result-solo-sub {
-  font-size: 12px;
-  color: var(--steel);
-}
-
-/* Actions Row */
 .result-actions-row {
-  width: 100%;
   display: flex;
   gap: 12px;
 }
 
 .btn-result {
   flex: 1;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   cursor: pointer;
+  border: 1.5px solid transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.btn-result:active {
-  transform: scale(0.97);
-}
-
-.btn-svg-icon {
+.btn-result .btn-svg-icon {
   width: 18px;
   height: 18px;
   stroke: currentColor;
@@ -1480,105 +1620,68 @@ body {
 }
 
 .btn-result-menu {
-  background: #161b29;
-  border-color: #2e3b52;
-  color: #cbd5e1;
+  background: linear-gradient(180deg, #4d2b17, #321a0d);
+  border-color: #7c4426;
+  color: #fff2cc;
+  box-shadow: 0 4px 0 #130702, 0 6px 14px rgba(0,0,0,0.6);
 }
 
-.btn-result-menu:hover {
-  background: #1e2538;
-  border-color: var(--border-gold);
+.btn-result-menu:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #130702;
+}
+
+.btn-result-replay,
+.btn-result-resume {
+  background: linear-gradient(180deg, #2ecc71, #27ae60);
+  border-color: #58d68d;
   color: #fff;
+  box-shadow: 0 4px 0 #196f3d, 0 8px 18px rgba(0,0,0,0.65);
 }
 
-.btn-result-replay {
-  background: linear-gradient(135deg, #b8860b, #d4af37);
-  border-color: #ffd700;
-  color: #0d101a;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+.btn-result-replay:active,
+.btn-result-resume:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #196f3d;
 }
 
-.btn-result-replay:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+.btn-result-new-session {
+  background: linear-gradient(180deg, #ff3366, #d81159);
+  border-color: #ff8da1;
+  color: #fff;
+  box-shadow: 0 4px 0 #8b0029, 0 8px 18px rgba(0,0,0,0.65);
 }
 
-/* Session Resume Prompt Modal */
-.session-modal-box {
-  max-width: 440px;
+.btn-session-cancel {
+  margin-top: 14px;
+  background: none;
+  border: none;
+  font-family: 'Lilita One', sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .session-info-card {
-  width: 100%;
-  background: rgba(10, 13, 20, 0.7);
-  border: 1px solid #283348;
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 20px;
+  background: #190c06;
+  border: 1.5px solid #66381e;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
   text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .session-info-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-size: 13px;
+  font-weight: 700;
+  margin: 4px 0;
 }
 
-.session-info-label {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.session-info-val {
-  color: #fff;
-  font-weight: 800;
-}
-
-.btn-result-new-session {
-  background: #1a2030;
-  border-color: #334155;
-  color: #cbd5e1;
-}
-
-.btn-result-new-session:hover {
-  background: #222a3f;
-  border-color: var(--crimson);
-  color: #fff;
-}
-
-.btn-result-resume {
-  background: linear-gradient(135deg, #b8860b, #d4af37);
-  border-color: #ffd700;
-  color: #0d101a;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
-}
-
-.btn-result-resume:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-}
-
-.btn-session-cancel {
-  background: none;
-  border: none;
-  color: var(--steel);
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 14px;
-  cursor: pointer;
-  text-decoration: underline;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.btn-session-cancel:hover {
-  opacity: 1;
-  color: #fff;
-}
+.session-info-label { color: var(--text-muted); }
+.session-info-val { color: #fff; }
 
 /* Diagonal Hints (Solo Mode) */
 .dash-line-blue {
@@ -1598,29 +1701,32 @@ body {
   left: 25%;
   width: 50%;
   height: 50%;
-  border-bottom: 2px dashed rgba(230, 57, 70, 0.45);
+  border-bottom: 2px dashed rgba(255, 42, 95, 0.45);
   transform: rotate(-45deg);
   pointer-events: none;
   display: none;
 }
 
-/* Compact layout for screens with shorter height */
+/* Compact layout for shorter screens */
 @media (max-height: 760px) {
   .matrix-board {
-    width: 220px;
-    height: 220px;
+    width: 230px;
+    height: 230px;
     padding: 12px;
   }
   .node {
-    font-size: 22px;
+    border-radius: 12px;
+  }
+  .node-val {
+    font-size: 26px;
   }
   .numpad-panel {
-    max-width: 260px;
+    max-width: 270px;
     padding: 8px;
     gap: 6px;
   }
   .numpad-key, .numpad-key-enter {
-    height: 36px;
+    height: 38px;
   }
   .solo-layout .status-banner {
     margin-top: 50px;
@@ -1635,143 +1741,3 @@ body {
     gap: 8px;
   }
 }
-
-/* =========================================================================
-   GAME START COUNTDOWN OVERLAY (3, 2, 1, TEBAS!)
-   ========================================================================= */
-.countdown-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 450;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(8, 10, 16, 0.82);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  pointer-events: auto;
-}
-
-.countdown-modal {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 280px;
-  height: 280px;
-}
-
-.countdown-aura {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 210, 255, 0.3) 0%, rgba(230, 57, 70, 0.2) 50%, transparent 75%);
-  filter: blur(24px);
-  pointer-events: none;
-  animation: countdownPulse 0.85s ease-in-out infinite alternate;
-}
-
-.countdown-watermark {
-  position: absolute;
-  font-family: 'Cinzel', serif;
-  font-size: 150px;
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.04);
-  pointer-events: none;
-  line-height: 1;
-}
-
-.countdown-number {
-  position: relative;
-  font-family: 'Cinzel', serif;
-  font-size: 100px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-shadow: 
-    0 0 20px rgba(0, 210, 255, 0.85),
-    0 0 45px rgba(0, 210, 255, 0.45),
-    0 4px 12px rgba(0, 0, 0, 0.9);
-  line-height: 1;
-  margin-bottom: 12px;
-  transform-origin: center center;
-}
-
-.countdown-pop {
-  animation: countdownPopAnim 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.25) forwards;
-}
-
-.countdown-slash {
-  font-size: 64px !important;
-  color: #ffda79 !important;
-  letter-spacing: 4px;
-  text-shadow: 
-    0 0 25px rgba(230, 57, 70, 0.95),
-    0 0 50px rgba(255, 218, 121, 0.8),
-    0 4px 14px rgba(0, 0, 0, 0.95) !important;
-  animation: countdownSlashAnim 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.35) forwards !important;
-}
-
-.countdown-subtext {
-  position: relative;
-  font-family: 'Cinzel', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  opacity: 0.95;
-}
-
-@keyframes countdownPopAnim {
-  0% {
-    transform: scale(2.2);
-    opacity: 0;
-    filter: blur(8px);
-  }
-  30% {
-    transform: scale(1.08);
-    opacity: 1;
-    filter: blur(0);
-  }
-  65% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.9);
-    opacity: 0.8;
-  }
-}
-
-@keyframes countdownSlashAnim {
-  0% {
-    transform: scale(0.3) rotate(-8deg);
-    opacity: 0;
-  }
-  40% {
-    transform: scale(1.25) rotate(2deg);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(1.08) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-@keyframes countdownPulse {
-  0% { transform: scale(0.85); opacity: 0.5; }
-  100% { transform: scale(1.15); opacity: 0.85; }
-}
-

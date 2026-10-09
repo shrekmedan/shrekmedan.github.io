@@ -270,6 +270,58 @@ const Sound = {
     this.slash(0.7 + (4 - (step || 3)) * 0.2);
   },
 
+  // Juicy Fruit Slice Sound (Fruit Ninja wet squash + steel katana slash)
+  fruitSlice(pitch = 1) {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    const ctx = this.ctx;
+    const t = ctx.currentTime;
+
+    // 1. Wet juicy fruit squish transient
+    const len = Math.floor(ctx.sampleRate * 0.12);
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.28));
+    }
+    const squishNoise = ctx.createBufferSource();
+    squishNoise.buffer = buf;
+
+    const squishFilter = ctx.createBiquadFilter();
+    squishFilter.type = 'lowpass';
+    squishFilter.frequency.setValueAtTime(1400 * pitch, t);
+    squishFilter.frequency.exponentialRampToValueAtTime(320 * pitch, t + 0.1);
+
+    const squishGain = ctx.createGain();
+    squishGain.gain.setValueAtTime(0.55, t);
+    squishGain.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+
+    squishNoise.connect(squishFilter);
+    squishFilter.connect(squishGain);
+    squishGain.connect(ctx.destination);
+    squishNoise.start(t);
+
+    // 2. Juicy pulp pitch drop (fruity pop)
+    const popOsc = ctx.createOscillator();
+    const popGain = ctx.createGain();
+    popOsc.type = 'triangle';
+    popOsc.frequency.setValueAtTime(360 * pitch, t);
+    popOsc.frequency.exponentialRampToValueAtTime(85 * pitch, t + 0.08);
+
+    popGain.gain.setValueAtTime(0.35, t);
+    popGain.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
+
+    popOsc.connect(popGain);
+    popGain.connect(ctx.destination);
+    popOsc.start(t);
+    popOsc.stop(t + 0.1);
+
+    // 3. Sharp Katana whoosh + metallic ringing blade
+    this.slash(1.15 * pitch);
+    this.clash();
+  },
+
   // Subtle tactile tap for numpad keys
   tap() {
     if (!this.enabled) return;
@@ -335,13 +387,15 @@ function toggleSound() {
 Sound.loadSetting();
 
 /* =========================================================================
-   CANVAS ATMOSPHERE (Ambient Mist + Blade Trails)
+   CANVAS ATMOSPHERE (Ambient Mist + Fruit Ninja Splatters + Blade Trails)
    ========================================================================= */
 const canvas = document.getElementById('slashCanvas');
 const ctx = canvas.getContext('2d');
 let trails = [];
 let particles = [];
 let ambientMist = [];
+let splatters = []; // Fruit Ninja juice splatters on the dojo wood wall
+let sparkles = [];  // Shimmering blade trail star sparkles
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -357,10 +411,10 @@ function initAmbientMist() {
     ambientMist.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      radius: Math.random() * 2 + 1,
+      radius: Math.random() * 2.2 + 1,
       vx: (Math.random() - 0.5) * 0.4,
       vy: -Math.random() * 0.3 - 0.1,
-      alpha: Math.random() * 0.2 + 0.05
+      alpha: Math.random() * 0.25 + 0.08
     });
   }
 }
@@ -368,17 +422,53 @@ resizeCanvas();
 
 function addTrailPoint(x, y, color) {
   trails.push({ x, y, time: Date.now(), color });
+
+  // Add shimmering Fruit Ninja blade trail sparkles
+  if (Math.random() < 0.5) {
+    sparkles.push({
+      x: x + (Math.random() - 0.5) * 14,
+      y: y + (Math.random() - 0.5) * 14,
+      vx: (Math.random() - 0.5) * 1.8,
+      vy: (Math.random() - 0.5) * 1.8 + 0.4,
+      size: Math.random() * 3.5 + 2,
+      alpha: 1,
+      color: '#ffffff'
+    });
+  }
 }
 
-function addSpark(x, y, color, count = 10) {
+function addJuiceSplatter(x, y, color) {
+  const droplets = [];
+  const count = Math.floor(Math.random() * 8) + 12;
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = Math.random() * 65 + 12;
+    droplets.push({
+      ox: Math.cos(angle) * dist,
+      oy: Math.sin(angle) * dist + (Math.random() * 18),
+      r: Math.random() * 6 + 2.5
+    });
+  }
+
+  splatters.push({
+    x, y,
+    color,
+    mainR: Math.random() * 18 + 26,
+    droplets,
+    time: Date.now(),
+    duration: 2500
+  });
+}
+
+function addSpark(x, y, color, count = 12) {
   for (let i = 0; i < count; i++) {
     particles.push({
       x, y,
-      vx: (Math.random() - 0.5) * 10,
-      vy: (Math.random() - 0.5) * 10,
+      vx: (Math.random() - 0.5) * 12,
+      vy: (Math.random() - 0.5) * 12,
       alpha: 1,
       color,
-      radius: Math.random() * 3 + 2
+      radius: Math.random() * 3.5 + 2
     });
   }
 }
@@ -387,6 +477,37 @@ function renderCanvasFrame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const now = Date.now();
 
+  // 1. Fruit Ninja Juice Splatters on background
+  for (let i = splatters.length - 1; i >= 0; i--) {
+    const s = splatters[i];
+    const age = now - s.time;
+    if (age > s.duration) {
+      splatters.splice(i, 1);
+      continue;
+    }
+    const alpha = Math.max(0, 1 - (age / s.duration));
+
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.75;
+    ctx.fillStyle = s.color;
+    ctx.shadowBlur = 14;
+    ctx.shadowColor = s.color;
+
+    // Central splash puddle
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.mainR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Splattered satellite droplets
+    for (const d of s.droplets) {
+      ctx.beginPath();
+      ctx.arc(s.x + d.ox, s.y + d.oy, d.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // 2. Ambient Dojo Lantern Mist
   for (let m of ambientMist) {
     m.x += m.vx;
     m.y += m.vy;
@@ -398,7 +519,7 @@ function renderCanvasFrame() {
     if (m.x > canvas.width) m.x = 0;
 
     ctx.save();
-    ctx.fillStyle = '#c5a059';
+    ctx.fillStyle = '#ffb703';
     ctx.globalAlpha = m.alpha;
     ctx.beginPath();
     ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
@@ -406,47 +527,78 @@ function renderCanvasFrame() {
     ctx.restore();
   }
 
+  // 3. Shimmering Blade Sparkles (Fruit Ninja Star Glitters)
+  for (let i = sparkles.length - 1; i >= 0; i--) {
+    const sp = sparkles[i];
+    sp.x += sp.vx;
+    sp.y += sp.vy;
+    sp.alpha -= 0.038;
+    if (sp.alpha <= 0) {
+      sparkles.splice(i, 1);
+      continue;
+    }
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, sp.alpha);
+    ctx.fillStyle = sp.color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#ffffff';
+
+    const s = sp.size;
+    ctx.beginPath();
+    ctx.moveTo(sp.x, sp.y - s);
+    ctx.lineTo(sp.x + s * 0.35, sp.y);
+    ctx.lineTo(sp.x, sp.y + s);
+    ctx.lineTo(sp.x - s * 0.35, sp.y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // 4. Luminous Fruit Ninja Blade Ribbon Trail
   if (trails.length > 1) {
     for (let i = 1; i < trails.length; i++) {
       const p1 = trails[i - 1];
       const p2 = trails[i];
       const age = now - p2.time;
-      if (age > 220) continue;
-      const ratio = 1 - (age / 220);
+      if (age > 240) continue;
+      const ratio = 1 - (age / 240);
 
+      // Outer vivid blade aura
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
       ctx.strokeStyle = p2.color;
-      ctx.lineWidth = ratio * 14 + 3;
+      ctx.lineWidth = ratio * 18 + 5;
       ctx.lineCap = 'round';
-      ctx.shadowBlur = 18;
+      ctx.shadowBlur = 22;
       ctx.shadowColor = p2.color;
-      ctx.globalAlpha = ratio * 0.7;
+      ctx.globalAlpha = ratio * 0.78;
       ctx.stroke();
       ctx.restore();
 
+      // Sharp white luminous razor core
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = ratio * 4 + 1;
+      ctx.lineWidth = ratio * 5 + 1.5;
       ctx.lineCap = 'round';
-      ctx.globalAlpha = ratio * 0.9;
+      ctx.globalAlpha = ratio * 0.95;
       ctx.stroke();
       ctx.restore();
     }
   }
 
-  trails = trails.filter(p => now - p.time < 220);
+  trails = trails.filter(p => now - p.time < 240);
 
+  // 5. Slash Impact Spark Burst Particles
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i];
     p.x += p.vx;
     p.y += p.vy;
-    p.alpha -= 0.04;
+    p.alpha -= 0.045;
     if (p.alpha <= 0) {
       particles.splice(i, 1);
       continue;
@@ -454,7 +606,7 @@ function renderCanvasFrame() {
     ctx.save();
     ctx.globalAlpha = Math.max(0, p.alpha);
     ctx.fillStyle = p.color;
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = 10;
     ctx.shadowColor = p.color;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -597,11 +749,12 @@ function runGameCountdown(onComplete) {
 
     if (current.isFinal) {
       numEl.classList.add('countdown-slash');
-      Sound.clash();
+      Sound.fruitSlice(1.1);
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       addSpark(cx, cy, '#00d2ff', 24);
-      addSpark(cx, cy, '#e63946', 24);
+      addSpark(cx, cy, '#ff2a5f', 24);
+      addJuiceSplatter(cx, cy, '#ff2a5f');
     } else {
       numEl.classList.add('countdown-pop');
       Sound.countdownTick(current.sound);
@@ -791,14 +944,26 @@ function renderLives(slotKey) {
   container.innerHTML = '';
   for (let i = 0; i < slot.maxLives; i++) {
     const isAlive = (i < slot.lives);
-    const shurikenSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    shurikenSvg.setAttribute('viewBox', '0 0 24 24');
-    shurikenSvg.setAttribute('class', `shuriken-icon ${isAlive ? '' : 'shuriken-lost'}`);
-    shurikenSvg.innerHTML = `
-      <path d="M12 2 L14.5 9 L22 7 L16 12 L22 17 L14.5 15 L12 22 L9.5 15 L2 17 L8 12 L2 7 L9.5 9 Z" fill="currentColor"/>
-      <circle cx="12" cy="12" r="2.2" fill="#08090d"/>
-    `;
-    container.appendChild(shurikenSvg);
+    const fruitSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    fruitSvg.setAttribute('viewBox', '0 0 24 24');
+    fruitSvg.setAttribute('class', `fruit-life-icon ${isAlive ? '' : 'fruit-life-lost'}`);
+    if (isAlive) {
+      fruitSvg.innerHTML = `
+        <path d="M2 13 C 2 18.5, 6.5 22, 12 22 C 17.5 22, 22 18.5, 22 13 Z" fill="#2ecc71" stroke="#27ae60" stroke-width="1.2"/>
+        <path d="M3.2 13 C 3.2 17.5, 7.2 20.6, 12 20.6 C 16.8 20.6, 20.8 17.5, 20.8 13 Z" fill="#fffdfa"/>
+        <path d="M4.2 13 C 4.2 16.8, 7.6 19.5, 12 19.5 C 16.4 19.5, 19.8 16.8, 19.8 13 Z" fill="#ff2a5f"/>
+        <circle cx="8" cy="15.2" r="0.8" fill="#1b120c"/>
+        <circle cx="12" cy="16.5" r="0.8" fill="#1b120c"/>
+        <circle cx="16" cy="15.2" r="0.8" fill="#1b120c"/>
+        <path d="M5 13.6 Q 12 14.5 19 13.6" stroke="rgba(255,255,255,0.75)" stroke-width="1" stroke-linecap="round"/>
+      `;
+    } else {
+      fruitSvg.innerHTML = `
+        <path d="M5 5 L19 19 M19 5 L5 19" stroke="#ff2a5f" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M5 5 L19 19 M19 5 L5 19" stroke="#ff8da1" stroke-width="1.6" stroke-linecap="round"/>
+      `;
+    }
+    container.appendChild(fruitSvg);
   }
 }
 
@@ -1029,9 +1194,19 @@ function submitAnswer(slotKey) {
 
     if (userAns === correct) {
       triggerPlayerFlash(slotKey, true);
+      Sound.fruitSlice(1.2);
       Sound.success();
       slot.score += 2;
       document.getElementById(`${slot.prefix}ScoreText`).textContent = `Skor: ${slot.score}`;
+
+      const boardEl = document.getElementById(slotKey === 'solo' ? 'boardSolo' : (slotKey === 'p1' ? 'boardP1' : 'boardP2'));
+      if (boardEl) {
+        const rect = boardEl.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        addJuiceSplatter(cx, cy, '#f59e0b');
+        addSpark(cx, cy, '#f59e0b', 24);
+      }
 
       showSideToast(
         slotKey,
@@ -2147,8 +2322,13 @@ function onPointerEnd(id) {
       if (slot.step === 1) {
         if (visited.has('a') && visited.has('d')) {
           triggerPlayerFlash(state.arena, true);
-          Sound.clash();
-          addSpark(window.innerWidth / 2, window.innerHeight / 2, '#00d2ff', 16);
+          Sound.fruitSlice(1.15);
+          const boardEl = document.getElementById(state.arena === 'solo' ? 'boardSolo' : (state.arena === 'p1' ? 'boardP1' : 'boardP2'));
+          const rect = boardEl ? boardEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          addSpark(cx, cy, '#00d2ff', 24);
+          addJuiceSplatter(cx, cy, '#00d2ff');
 
           if (isAdv) {
             slot.step = '1_input'; // Menunggu murid memasukkan nilai a * d sendiri via numpad
@@ -2163,8 +2343,13 @@ function onPointerEnd(id) {
       else if (slot.step === 2) {
         if (visited.has('b') && visited.has('c')) {
           triggerPlayerFlash(state.arena, true);
-          Sound.clash();
-          addSpark(window.innerWidth / 2, window.innerHeight / 2, '#e63946', 16);
+          Sound.fruitSlice(0.95);
+          const boardEl = document.getElementById(state.arena === 'solo' ? 'boardSolo' : (state.arena === 'p1' ? 'boardP1' : 'boardP2'));
+          const rect = boardEl ? boardEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          addSpark(cx, cy, '#ff2a5f', 24);
+          addJuiceSplatter(cx, cy, '#ff2a5f');
 
           if (isAdv) {
             slot.step = '2_input'; // Menunggu murid memasukkan nilai b * c sendiri via numpad

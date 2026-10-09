@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Ninja Determinan Matriks</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2.3">
 </head>
 <body>
 
@@ -48,7 +51,9 @@
 
         <div class="name-input-group">
           <div class="name-input-item">
-            <label class="name-label" for="inputNameP1">Nama Pemain 1:</label>
+            <div class="label-with-switch">
+              <label class="name-label" for="inputNameP1">Nama Pemain 1:</label>
+            </div>
             <input type="text" class="name-input" id="inputNameP1" value="Player 1" maxlength="25">
           </div>
 
@@ -67,7 +72,7 @@
         <!-- Switch & Options Time Attack -->
         <div class="time-attack-group">
           <div class="time-attack-header">
-            <div>
+            <div class="time-attack-title-box">
               <span class="time-attack-label">Batas Waktu (Time Attack)</span>
               <span class="time-attack-hint" id="timeAttackHintText">Total 60 detik (skor terbanyak menang)</span>
             </div>
