@@ -23,11 +23,11 @@
     --h: #252525;
     --pink: #e74492;
     --bt: solid;
-    --color:#000;
+    --color:#e6e8ec;
     --marginleft:-120px;
     --bgimg:url(../images/mikuheader.webp);
     --display:flex;
-	--text:white;
+	--text:#e6e8ec;
 }
 
 * {
@@ -44,7 +44,7 @@
 
 ::-webkit-scrollbar-thumb{
     background: var(--pink);
-    border: 3.5px var(--bt) #FFFFFF;
+    border: 3.5px var(--bt) var(--b);
     border-radius: 0px;
 }
 
@@ -53,32 +53,49 @@
 }
 
 ::-webkit-scrollbar-track{
-    background: #FFFFFF;
+    background: var(--b);
     border-radius: 0px;
-    box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+    box-shadow: inset 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
 
 ::selection {
     background: var(--bc);
-    color:white;
+    color:#121212;
 }
  
 ::-moz-selection {
     background: var(--bc);
-    color:white;
+    color:#121212;
 }
 
-a{
-    text-decoration: none;
-    color:var(--pink);
-    text-shadow: 2px 2px 1px #34f2ff;
-    transition:0.3s;
+/* Penyesuaian Keterbacaan Khusus Dark Mode */
+[data-theme="dark"] a {
+    color: #ff5ba7;
+    text-shadow: 1px 1px 0px rgba(52, 242, 255, 0.4);
 }
 
-a:hover{
-    
-    transition:0.3s;
-    letter-spacing:1.5px;
+[data-theme="dark"] a:hover {
+    color: #ff85be;
+    text-shadow: 1px 1px 0px var(--bc), 0 0 5px rgba(255, 91, 167, 0.5);
+}
+
+[data-theme="dark"] .retro-badge {
+    text-shadow: 1px 1px 0px rgba(52, 242, 255, 0.35);
+}
+
+[data-theme="dark"] p {
+    line-height: 1.32;
+    letter-spacing: 0.15px;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: rgba(230, 232, 236, 0.45);
+}
+
+[data-theme="dark"] .project-desc {
+    opacity: 0.95;
+    color: #cfd4dc;
 }
 
 
@@ -480,8 +497,8 @@ button:hover{
     margin: 20px 0 0 20px;
     padding: 5px;
     max-width: 300px;
-    background-color:var(--b);
-    color:black;
+    background-color:var(--h);
+    color:var(--text);
     border: var(--bw) var(--bt) var(--bc);
     z-index: 9999;
 }

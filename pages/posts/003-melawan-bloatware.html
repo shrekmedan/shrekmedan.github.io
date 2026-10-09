@@ -3,7 +3,26 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Melawan Bloatware di Era Komputasi Modern - Tukang Olah</title>
+        <title>Melawan Bloatware di Era Komputasi Modern: Teto OS dan cerita dibaliknya - Tukang Olah</title>
+        <link rel="icon" type="image/gif" href="../../images/j2aivj.gif">
+        <meta name="description" content="Banyak yang beranggapan bahwa dengan RAM belasan gigabyte hari ini, kita tak perlu lagi merisaukan background service yang boros sumber daya. Namun bagi saya, ini bukan sekadar soal sisa memori, tetapi kedaulatan pengguna atas mesinnya sendiri.">
+        <link rel="canonical" href="https://tukangolah.0x80.eu.org/pages/posts/003-melawan-bloatware.html">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://tukangolah.0x80.eu.org/pages/posts/003-melawan-bloatware.html">
+        <meta property="og:title" content="Melawan Bloatware di Era Komputasi Modern: Teto OS dan cerita dibaliknya - Tukang Olah">
+        <meta property="og:description" content="Banyak yang beranggapan bahwa dengan RAM belasan gigabyte hari ini, kita tak perlu lagi merisaukan background service yang boros sumber daya. Namun bagi saya, ini bukan sekadar soal sisa memori, tetapi kedaulatan pengguna atas mesinnya sendiri.">
+        <meta property="og:image" content="https://tukangolah.0x80.eu.org/images/mikuheader.webp">
+        <meta property="og:site_name" content="Tukang Olah">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://tukangolah.0x80.eu.org/pages/posts/003-melawan-bloatware.html">
+        <meta name="twitter:title" content="Melawan Bloatware di Era Komputasi Modern: Teto OS dan cerita dibaliknya - Tukang Olah">
+        <meta name="twitter:description" content="Banyak yang beranggapan bahwa dengan RAM belasan gigabyte hari ini, kita tak perlu lagi merisaukan background service yang boros sumber daya. Namun bagi saya, ini bukan sekadar soal sisa memori, tetapi kedaulatan pengguna atas mesinnya sendiri.">
+        <meta name="twitter:image" content="https://tukangolah.0x80.eu.org/images/mikuheader.webp">
+
         <link rel="stylesheet" href="../../css/style.css" type="text/css" media="all">
         <script src="../../scripts/theme.js"></script>
     </head>
@@ -112,9 +131,9 @@
                     <span>12.09.2026</span>
                     <span class="tag-status">SISTEM</span>
                     <span>&bull;</span>
-                    <span>3 min baca</span>
+                    <span>5 min baca</span>
                 </div>
-                <h1 class="post-title">Melawan Bloatware di Era Komputasi Modern</h1>
+                <h1 class="post-title">Melawan Bloatware di Era Komputasi Modern: Teto OS dan cerita dibaliknya</h1>
             </div>
 
             <div class="post-body">
@@ -137,10 +156,50 @@
                     <strong>Catatan Olahan:</strong> Mesin komputer adalah alat berpikir dan instrumen kreasi manusia. Komputer seharusnya patuh, bersih, dan beroperasi secepat kecepatan pikiran pemiliknya.
                 </div>
 
-                <h2>Filosofi di Balik TetoOS</h2>
+                <h2>Kenapa Harus ISO Pre-Debloated?</h2>
                 <p>
-                    Proyek seperti <strong>TetoOS</strong> dan script otomasi debloat yang saya kembangkan lahir bukan karena benci pada sistem operasi modern, melainkan karena cinta pada efisiensi.
+                    Di internet sebenarnya banyak solusi yang menawarkan <em>debloat script</em> berbasis PowerShell atau batch file. Solusi semacam itu bagus untuk penggunaan personal satu atau dua komputer. Namun sebagai seorang teknisi, metode script terasa kurang praktis jika harus dijalankan untuk puluhan PC secara massal di lapangan.
                 </p>
+                <p>
+                    Menjalankan script pasca-instalasi di setiap unit memakan waktu kerja yang berlipat dan sering kali menyisakan dependensi sistem yang tidak konsisten. Dari situlah saya beranggapan bahwa menyiapkan file ISO yang sudah <strong>pre-debloated</strong> sejak awal adalah jalan terbaik: begitu proses instalasi selesai, sistem langsung bersih, ringan, stabil, dan siap tempur tanpa perlu ritual tambahan.
+                </p>
+
+                <h2>Awalnya Cuma Candaan: Migu OS</h2>
+                <p>
+                    Berangkat dari kebutuhan teknis dan rasa penasaran itulah, saya mulai meracik modifikasi instalasi Windows sendiri.
+                </p>
+                <p>
+                    Awalnya, project ini dibuat dengan nama <strong>Migu OS</strong>, sebuah project Windows modifikasi yang menggunakan nama dan karakter Miku sebagai bagian dari konsepnya. Nama Migu sendiri merupakan plesetan dari Miku, dan memang sejak awal dimaksudkan sebagai sebuah joke.
+                </p>
+                <p>
+                    Project ini pada awalnya hanya dibuat sebagai project kecil untuk konsumsi sendiri. Kemudian seorang netizen di Facebook mulai tertarik setelah melihat Windows yang digunakan terasa jauh lebih ringan. Bersama circle dan komunitasnya, project tersebut mulai diperkenalkan dan dibagikan lebih luas.
+                </p>
+
+                <h2>Atensi Tak Terduga dan Permintaan Takedown</h2>
+                <p>
+                    Tidak disangka, penyebaran tersebut membuat Migu OS mulai mendapat perhatian yang jauh lebih besar dari sebelumnya. Sampai akhirnya project ini mendapat perhatian dari pihak terkait dengan karakter Miku. Ilustrator asli karakter yang digunakan kemudian meminta agar project tersebut ditakedown.
+                </p>
+                <p>
+                    Saya menghormati permintaan tersebut dan meminta maaf secara langsung kepada ilustrator yang bersangkutan, tetapi permintaan maaf tersebut tidak mendapat tanggapan. Bagi saya, menghormati hak cipta kreator lain adalah prinsip yang tidak bisa ditawar.
+                </p>
+
+                <h2>Rebranding ke Kasane Teto</h2>
+                <p>
+                    Daripada terus melanjutkan project dengan risiko masalah yang sama, akhirnya Migu OS saya serahkan kepada netizen tersebut. Sebagai langkah pencegahan, mereka kemudian memutuskan untuk melakukan rebranding dan mengganti maskot utama project.
+                </p>
+                <p>
+                    Pilihan akhirnya jatuh kepada <strong>Kasane Teto</strong>, yang dianggap lebih sesuai dengan identitas dan sifat project yang sejak awal dibuat sebagai project komunitas, <em>for fun</em>, dan nonprofit.
+                </p>
+
+                <h2>Kembali Sebagai Mod Leader</h2>
+                <p>
+                    Setelah versi Early Access Teto OS mulai dikembangkan, saya kemudian bergabung kembali ke dalam team dan mengambil peran sebagai <strong>Mod Leader</strong>.
+                </p>
+                <p>
+                    Dan ironisnya, saya yang membuat Migu OS pada awalnya justru akhirnya kembali ke project tersebut sebagai bagian dari team yang mengembangkan penerusnya.
+                </p>
+
+                <h2>Menemukan Esensi Sistem</h2>
                 <p>
                     Dengan menonaktifkan service yang tidak relevan, memangkas bloatware, dan menata registry secara cermat, kita bukan hanya menghemat beberapa ratus megabyte memori. Kita mendapatkan respons latensi yang instan, suhu prosesor yang lebih dingin, dan ketenangan pikiran karena tahu persis proses apa saja yang sedang bernapas di sistem kita.
                 </p>

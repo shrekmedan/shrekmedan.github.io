@@ -6,16 +6,16 @@ const BLOG_POSTS = [
         date: "09.10.2026",
         tag: "EDUKASI",
         readTime: "4 min baca",
-        excerpt: "Berangkat dari workshop SPMI dan Digitalisasi Pembelajaran, fasilitas Papan Interaktif Digital (PID) di kelas dicoba diolah menjadi permainan tebas diagonal matriks ala Fruit Ninja agar murid bisa bermain sambil belajar.",
+        excerpt: "Berangkat dari workshop SPMI dan Digitalisasi Pembelajaran, fasilitas Papan Interaktif Digital (PID) di kelas dicoba diolah menjadi permainan determinan matriks ala Ninja agar murid bisa bermain sambil belajar.",
         file: "posts/004-ninja-determinan.html"
     },
     {
         id: "003",
-        title: "Melawan Bloatware di Era Komputasi Modern",
+        title: "Melawan Bloatware di Era Komputasi Modern: Teto OS dan cerita dibaliknya",
         date: "12.09.2026",
         tag: "SISTEM",
-        readTime: "3 min baca",
-        excerpt: "Banyak yang beranggapan bahwa dengan RAM belasan gigabyte hari ini, kita tak perlu lagi merisaukan background service yang boros sumber daya. Namun bagi saya, ini bukan sekadar soal sisa memori - ini soal kedaulatan pengguna atas mesinnya sendiri.",
+        readTime: "5 min baca",
+        excerpt: "Banyak yang beranggapan bahwa dengan RAM belasan gigabyte hari ini, kita tak perlu lagi merisaukan background service yang boros sumber daya. Namun bagi saya, ini bukan sekadar soal sisa memori, tetapi kedaulatan pengguna atas mesinnya sendiri.",
         file: "posts/003-melawan-bloatware.html"
     },
     {
