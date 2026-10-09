@@ -2373,12 +2373,20 @@ window.addEventListener('touchstart', (e) => {
     const t = e.changedTouches[i];
     onPointerStart(t.identifier, t.clientX, t.clientY);
   }
-}, { passive: false });
+}, { passive: true });
 
 window.addEventListener('touchmove', (e) => {
+  let hasActiveSlash = false;
   for (let i = 0; i < e.changedTouches.length; i++) {
     const t = e.changedTouches[i];
+    if (activePointers.has(t.identifier)) {
+      hasActiveSlash = true;
+    }
     onPointerMove(t.identifier, t.clientX, t.clientY);
+  }
+  // Cegah scroll browser HANYA saat sedang menebas diagonal matriks
+  if (hasActiveSlash && e.cancelable) {
+    e.preventDefault();
   }
 }, { passive: false });
 
