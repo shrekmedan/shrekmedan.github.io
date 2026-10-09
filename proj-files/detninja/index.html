@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Ninja Determinan Matriks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fullscreen Canvas for Katana Slash Trails & Ambient Mist -->
+  <canvas id="slashCanvas"></canvas>
+
+  <!-- SPLASH SCREEN OVERLAY -->
+  <div class="splash-overlay" id="splashScreen">
+    <!-- Tombol Suara Splash Screen -->
+    <button type="button" class="splash-sound-btn" id="splashSoundBtn" onclick="toggleSound()" title="Pengaturan Suara">
+      <svg viewBox="0 0 24 24" class="btn-svg-icon icon-sound-on"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      <svg viewBox="0 0 24 24" class="btn-svg-icon icon-sound-off" style="display: none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    </button>
+
+    <div class="splash-header">
+      <h1 class="splash-title">NINJA DETERMINAN</h1>
+      <p class="splash-subtitle">Adu cepat tebas diagonal dan hitung determinan matriks 2x2</p>
+    </div>
+
+    <div class="splash-single-card">
+      <!-- Mode Latihan -->
+      <div class="splash-practice-block">
+        <div class="splash-block-info">
+          <h2 class="splash-block-title" style="color: var(--katana-blue);">Mode Latihan</h2>
+          <p class="splash-block-desc">Pemanasan, lihat tutorialnya dulu.</p>
+        </div>
+        <button class="splash-btn-start btn-start-practice" onclick="launchPracticeMode()">Mulai Latihan</button>
+      </div>
+
+      <div class="splash-card-divider">
+        <span class="divider-line"></span>
+        <span class="divider-text">ATAU</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- Siap Bertanding? (Mode Serius / Ujian) -->
+      <div class="splash-serious-block">
+        <div class="splash-block-info">
+          <h2 class="splash-block-title" style="color: var(--crimson);">Siap Bertanding?</h2>
+        </div>
+
+        <div class="name-input-group">
+          <div class="name-input-item">
+            <label class="name-label" for="inputNameP1">Nama Pemain 1:</label>
+            <input type="text" class="name-input" id="inputNameP1" value="Player 1" maxlength="25">
+          </div>
+
+          <div class="name-input-item">
+            <div class="label-with-switch">
+              <label class="name-label" for="inputNameP2">Nama Pemain 2:</label>
+              <label class="switch" title="Aktifkan Duel 1 vs 1">
+                <input type="checkbox" id="toggleVersusMode" onchange="toggleVersusSetting()">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <input type="text" class="name-input" id="inputNameP2" value="Player 2" maxlength="25" disabled placeholder="Pemain 2 (Nonaktif)">
+          </div>
+        </div>
+
+        <!-- Switch & Options Time Attack -->
+        <div class="time-attack-group">
+          <div class="time-attack-header">
+            <div>
+              <span class="time-attack-label">Batas Waktu (Time Attack)</span>
+              <span class="time-attack-hint" id="timeAttackHintText">Total 60 detik (skor terbanyak menang)</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggleTimeAttack" onchange="toggleTimeAttackSettings()">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="time-attack-options" id="timeAttackOptionsBox" style="display: none;">
+            <div class="time-type-tabs">
+              <button type="button" class="btn-time-tab active" id="tabTimeGlobal" onclick="setTimeAttackType('global')">Keseluruhan</button>
+              <button type="button" class="btn-time-tab" id="tabTimePerQuestion" onclick="setTimeAttackType('per_question')">Per Soal</button>
+            </div>
+
+            <div class="time-adjuster">
+              <span class="adjuster-label" id="adjusterLabel">Total Batas Waktu:</span>
+              <div class="adjuster-controls">
+                <button type="button" class="btn-adjust" onclick="adjustTime(-1)">-</button>
+                <span class="adjust-val" id="timeDurationDisplay">60 detik</span>
+                <button type="button" class="btn-adjust" onclick="adjustTime(1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="splash-btn-start btn-start-play" id="btnStartPlay" onclick="launchPlayMode()">Mainkan!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING MINIMALIST CONTROLS -->
+  <div class="floating-controls" id="floatingControls" style="display: none;">
+    <button class="btn-float btn-float-sound" id="matchSoundBtn" title="Suara: Nyala" onclick="toggleSound()">
+      <svg viewBox="0 0 24 24" class="btn-svg-icon icon-sound-on"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      <svg viewBox="0 0 24 24" class="btn-svg-icon icon-sound-off" style="display: none;"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    </button>
+    <button class="btn-float btn-float-exit" title="Keluar ke Menu Awal" onclick="exitToSplash()">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Main Work Area -->
+  <main id="mainViewport">
+
+    <!-- SOLO MODE -->
+    <section class="solo-layout" id="soloSection">
+      <!-- Side Floating Toast for Solo -->
+      <div class="side-toast" id="soloToast">
+        <div class="side-toast-title" id="soloToastTitle">Pemberitahuan</div>
+        <div class="side-toast-body" id="soloToastBody">Pesan notifikasi</div>
+      </div>
+      <!-- Timer Hitung Mundur Solo Serius (Time Attack) -->
+      <div class="versus-timer-container" id="soloTimerContainer" style="display: none; margin-bottom: 12px;">
+        <div class="versus-timer-badge">
+          <span class="timer-label">WAKTU</span>
+          <span class="timer-val" id="soloTimerVal">15</span>
+        </div>
+        <div class="versus-timer-bar-track" style="width: 220px;">
+          <div class="versus-timer-bar-fill" id="soloTimerFill"></div>
+        </div>
+      </div>
+
+      <div class="player-header" style="max-width: 440px;">
+        <div class="player-name-wrapper">
+          <span class="player-name" id="soloPlayerName" style="color: var(--gold);">Latihan</span>
+        </div>
+        <div class="player-stats">
+          <div class="score-chip" id="soloScoreText">Skor: 0</div>
+          <div class="lives-box">
+            <span class="lives-label">Nyawa:</span>
+            <div class="lives-shurikens" id="soloLivesDots"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-banner">
+        <div class="step-tag step-blue" id="soloStepTag">Langkah 1: Tebas Diagonal (a → d)</div>
+        <div class="instruction" id="soloInstruction">Tebas lurus dari node a ke node d</div>
+      </div>
+
+      <div class="arena-content">
+        <div class="matrix-board" id="boardSolo" data-arena="solo">
+          <div class="dash-line-blue" id="soloDashBlue"></div>
+          <div class="dash-line-red" id="soloDashRed"></div>
+          <div class="matrix-grid">
+            <div class="node" data-pos="a" id="solo_a"><span class="node-idx">a</span><span class="node-val">3</span></div>
+            <div class="node" data-pos="b" id="solo_b"><span class="node-idx">b</span><span class="node-val">2</span></div>
+            <div class="node" data-pos="c" id="solo_c"><span class="node-idx">c</span><span class="node-val">1</span></div>
+            <div class="node" data-pos="d" id="solo_d"><span class="node-idx">d</span><span class="node-val">4</span></div>
+          </div>
+        </div>
+
+        <div class="calc-tray">
+          <div class="tray-box tray-blue">
+            <span class="tray-box-label">(a x d)</span>
+            <span class="tray-box-val" id="soloValAD">...</span>
+          </div>
+          <div class="tray-op">-</div>
+          <div class="tray-box tray-red">
+            <span class="tray-box-label">(b x c)</span>
+            <span class="tray-box-val" id="soloValBC">...</span>
+          </div>
+          <div class="tray-op">=</div>
+          <div class="tray-box tray-amber">
+            <span class="tray-box-label">Det</span>
+            <span class="tray-box-val" id="soloValDet">...</span>
+          </div>
+        </div>
+
+        <!-- Virtual Numpad for Solo -->
+        <div class="numpad-panel" id="soloNumpad">
+          <div class="numpad-display-box">
+            <span class="numpad-display-label">Hasil:</span>
+            <span class="numpad-display-val" id="soloInputDisplay"> </span>
+          </div>
+          <div class="numpad-grid">
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '1')">1</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '2')">2</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '3')">3</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '4')">4</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '5')">5</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '6')">6</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '7')">7</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '8')">8</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '9')">9</button>
+            <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('solo', '-')">+/-</button>
+            <button type="button" class="numpad-key" onclick="pressNumpad('solo', '0')">0</button>
+            <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('solo', 'backspace')" title="Hapus">
+              <svg viewBox="0 0 24 24" class="numpad-backspace-svg"><path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/></svg>
+            </button>
+          </div>
+          <div class="numpad-enter-row">
+            <button type="button" class="numpad-key-enter" onclick="submitAnswer('solo')">Jawab</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 VS 1 SIDE BY SIDE MODE -->
+    <section class="versus-layout" id="versusSection">
+
+      <!-- Center Countdown Timer for Time Attack Mode -->
+      <div class="versus-timer-container" id="versusTimerContainer" style="display: none;">
+        <div class="versus-timer-badge">
+          <span class="timer-label">WAKTU</span>
+          <span class="timer-val" id="versusTimerVal">15</span>
+        </div>
+        <div class="versus-timer-bar-track">
+          <div class="versus-timer-bar-fill" id="versusTimerFill"></div>
+        </div>
+      </div>
+
+      <!-- Player 1 (Left Side) -->
+      <div class="versus-col versus-col-left" id="colP1">
+        <!-- Local Floating Toast for Player 1 -->
+        <div class="side-toast" id="p1Toast">
+          <div class="side-toast-title" id="p1ToastTitle">Pemberitahuan</div>
+          <div class="side-toast-body" id="p1ToastBody">Pesan pelanggaran</div>
+        </div>
+
+        <!-- Eliminated Overlay for Player 1 -->
+        <div class="side-eliminated-banner" id="p1EliminatedBanner">
+          <div class="eliminated-badge">Nyawa Habis</div>
+          <p style="color: var(--text-muted); font-size: 14px;">Tunggu lawan selesai dulu ya...</p>
+        </div>
+
+        <div class="player-header">
+          <div class="player-name-wrapper">
+            <span class="player-name player-name-p1" id="p1PlayerName">Pemain 1</span>
+          </div>
+          <div class="player-stats">
+            <div class="score-chip" id="p1ScoreText">Skor: 0</div>
+            <div class="lives-box">
+              <span class="lives-label">Nyawa:</span>
+              <div class="lives-shurikens" id="p1LivesDots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No text hint banner in versus mode -->
+
+        <div class="arena-content">
+          <div class="matrix-board" id="boardP1" data-arena="p1">
+            <div class="matrix-grid">
+              <div class="node" data-pos="a" id="p1_a"><span class="node-idx">a</span><span class="node-val">2</span></div>
+              <div class="node" data-pos="b" id="p1_b"><span class="node-idx">b</span><span class="node-val">3</span></div>
+              <div class="node" data-pos="c" id="p1_c"><span class="node-idx">c</span><span class="node-val">1</span></div>
+              <div class="node" data-pos="d" id="p1_d"><span class="node-idx">d</span><span class="node-val">5</span></div>
+            </div>
+          </div>
+
+          <div class="calc-tray">
+            <div class="tray-box tray-blue">
+              <span class="tray-box-label">(a x d)</span>
+              <span class="tray-box-val" id="p1ValAD">-</span>
+            </div>
+            <div class="tray-op">-</div>
+            <div class="tray-box tray-red">
+              <span class="tray-box-label">(b x c)</span>
+              <span class="tray-box-val" id="p1ValBC">-</span>
+            </div>
+            <div class="tray-op">=</div>
+            <div class="tray-box tray-amber">
+              <span class="tray-box-label">Det</span>
+              <span class="tray-box-val" id="p1ValDet">-</span>
+            </div>
+          </div>
+
+          <!-- Numpad P1 -->
+          <div class="numpad-panel" id="p1Numpad">
+            <div class="numpad-display-box">
+              <span class="numpad-display-label">Hasil:</span>
+              <span class="numpad-display-val" id="p1InputDisplay">_</span>
+            </div>
+            <div class="numpad-grid">
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '1')">1</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '2')">2</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '3')">3</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '4')">4</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '5')">5</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '6')">6</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '7')">7</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '8')">8</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '9')">9</button>
+              <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('p1', '-')">+/-</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p1', '0')">0</button>
+              <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('p1', 'backspace')" title="Hapus">
+                <svg viewBox="0 0 24 24" class="numpad-backspace-svg"><path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/></svg>
+              </button>
+            </div>
+            <div class="numpad-enter-row">
+              <button type="button" class="numpad-key-enter" onclick="submitAnswer('p1')">Jawab</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player 2 (Right Side) -->
+      <div class="versus-col versus-col-right" id="colP2">
+        <!-- Local Floating Toast for Player 2 -->
+        <div class="side-toast" id="p2Toast">
+          <div class="side-toast-title" id="p2ToastTitle">Pemberitahuan</div>
+          <div class="side-toast-body" id="p2ToastBody">Pesan pelanggaran</div>
+        </div>
+
+        <!-- Eliminated Overlay for Player 2 -->
+        <div class="side-eliminated-banner" id="p2EliminatedBanner">
+          <div class="eliminated-badge">Nyawa Habis</div>
+          <p style="color: var(--text-muted); font-size: 14px;">Tunggu lawan selesai dulu ya...</p>
+        </div>
+
+        <div class="player-header">
+          <div class="player-name-wrapper">
+            <span class="player-name player-name-p2" id="p2PlayerName">Pemain 2</span>
+          </div>
+          <div class="player-stats">
+            <div class="score-chip" id="p2ScoreText">Skor: 0</div>
+            <div class="lives-box">
+              <span class="lives-label">Nyawa:</span>
+              <div class="lives-shurikens" id="p2LivesDots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No text hint banner in versus mode -->
+
+        <div class="arena-content">
+          <div class="matrix-board" id="boardP2" data-arena="p2">
+            <div class="matrix-grid">
+              <div class="node" data-pos="a" id="p2_a"><span class="node-idx">a</span><span class="node-val">4</span></div>
+              <div class="node" data-pos="b" id="p2_b"><span class="node-idx">b</span><span class="node-val">1</span></div>
+              <div class="node" data-pos="c" id="p2_c"><span class="node-idx">c</span><span class="node-val">2</span></div>
+              <div class="node" data-pos="d" id="p2_d"><span class="node-idx">d</span><span class="node-val">3</span></div>
+            </div>
+          </div>
+
+          <div class="calc-tray">
+            <div class="tray-box tray-blue">
+              <span class="tray-box-label">(a x d)</span>
+              <span class="tray-box-val" id="p2ValAD">-</span>
+            </div>
+            <div class="tray-op">-</div>
+            <div class="tray-box tray-red">
+              <span class="tray-box-label">(b x c)</span>
+              <span class="tray-box-val" id="p2ValBC">-</span>
+            </div>
+            <div class="tray-op">=</div>
+            <div class="tray-box tray-amber">
+              <span class="tray-box-label">Det</span>
+              <span class="tray-box-val" id="p2ValDet">-</span>
+            </div>
+          </div>
+
+          <!-- Numpad P2 -->
+          <div class="numpad-panel" id="p2Numpad">
+            <div class="numpad-display-box">
+              <span class="numpad-display-label">Hasil:</span>
+              <span class="numpad-display-val" id="p2InputDisplay">_</span>
+            </div>
+            <div class="numpad-grid">
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '1')">1</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '2')">2</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '3')">3</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '4')">4</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '5')">5</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '6')">6</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '7')">7</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '8')">8</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '9')">9</button>
+              <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('p2', '-')">+/-</button>
+              <button type="button" class="numpad-key" onclick="pressNumpad('p2', '0')">0</button>
+              <button type="button" class="numpad-key numpad-key-action" onclick="pressNumpad('p2', 'backspace')" title="Hapus">
+                <svg viewBox="0 0 24 24" class="numpad-backspace-svg"><path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12 19 15.59z"/></svg>
+              </button>
+            </div>
+            <div class="numpad-enter-row">
+              <button type="button" class="numpad-key-enter" onclick="submitAnswer('p2')">Jawab</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Modal Hasil Permainan & Pemenang -->
+  <div class="result-modal-overlay" id="roundResultCard" style="display: none;">
+    <div class="result-modal-box">
+      <!-- Lambang Bintang Ninja Emas -->
+      <div class="result-emblem-wrap">
+        <div class="result-emblem-circle">
+          <svg viewBox="0 0 24 24" class="result-shuriken-svg">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z" fill="currentColor"/>
+            <circle cx="12" cy="12" r="3" fill="#0d101a"/>
+          </svg>
+        </div>
+        <div class="result-badge-label" id="resultBadgeLabel">HASIL DUEL</div>
+      </div>
+
+      <!-- Judul Pemenang -->
+      <h2 class="result-title" id="roundResultTitle">PEMAIN 1 MENANG</h2>
+
+      <!-- Deskripsi / Keterangan -->
+      <p class="result-desc" id="roundResultDesc">Pertandingan telah selesai!</p>
+
+      <!-- Komparasi Skor 1 vs 1 -->
+      <div class="result-score-comparison" id="resultScoreComparison" style="display: none;">
+        <div class="result-player-col" id="resultColP1">
+          <span class="result-player-name" id="resultP1Name">Pemain 1</span>
+          <span class="result-player-score" id="resultP1Score">0</span>
+          <span class="result-player-tag" id="resultP1Tag">Pemenang</span>
+        </div>
+        <div class="result-vs-divider">VS</div>
+        <div class="result-player-col" id="resultColP2">
+          <span class="result-player-name" id="resultP2Name">Pemain 2</span>
+          <span class="result-player-score" id="resultP2Score">0</span>
+          <span class="result-player-tag" id="resultP2Tag">Kalah</span>
+        </div>
+      </div>
+
+      <!-- Ringkasan Skor Solo -->
+      <div class="result-solo-summary" id="resultSoloSummary" style="display: none;">
+        <div class="result-solo-score-card">
+          <span class="result-solo-label">TOTAL SKOR</span>
+          <span class="result-solo-score" id="resultSoloScoreVal">0</span>
+          <span class="result-solo-sub">Poin yang berhasil dikumpulkan</span>
+        </div>
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="result-actions-row">
+        <button type="button" class="btn-result btn-result-menu" onclick="exitToSplashFromModal()">
+          <svg viewBox="0 0 24 24" class="btn-svg-icon"><path d="M3 10.5L12 3l9 7.5v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-10z"/></svg>
+          Menu Awal
+        </button>
+        <button type="button" class="btn-result btn-result-replay" id="btnNextRound" onclick="closeRoundResult()">
+          <svg viewBox="0 0 24 24" class="btn-svg-icon"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8m0-5v5h-5"/></svg>
+          Main Lagi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Lanjutkan Sesi / Sesi Baru -->
+  <div class="result-modal-overlay" id="sessionPromptModal" style="display: none;">
+    <div class="result-modal-box session-modal-box">
+      <div class="result-emblem-wrap">
+        <div class="result-emblem-circle">
+          <svg viewBox="0 0 24 24" class="result-shuriken-svg">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z" fill="currentColor"/>
+            <circle cx="12" cy="12" r="3" fill="#0d101a"/>
+          </svg>
+        </div>
+        <div class="result-badge-label">SESI TERSIMPAN</div>
+      </div>
+
+      <h2 class="result-title">Lanjut Main?</h2>
+      <p class="result-desc" id="sessionPromptDesc">
+        Masih ada permainan sebelumnya yang belum selesai. Mau dilanjutin atau mulai baru?
+      </p>
+
+      <div class="session-info-card" id="sessionInfoCard">
+        <!-- Rangkuman sesi sebelumnya di-generate via JS -->
+      </div>
+
+      <div class="result-actions-row">
+        <button type="button" class="btn-result btn-result-new-session" onclick="confirmStartNewSession()">
+          <svg viewBox="0 0 24 24" class="btn-svg-icon"><path d="M12 5v14M5 12h14"/></svg>
+          Mulai Baru
+        </button>
+        <button type="button" class="btn-result btn-result-resume" onclick="confirmResumeSession()">
+          <svg viewBox="0 0 24 24" class="btn-svg-icon"><path d="M5 3l14 9-14 9V3z"/></svg>
+          Lanjut Main
+        </button>
+      </div>
+      <button type="button" class="btn-session-cancel" onclick="closeSessionPromptModal()">Batal</button>
+    </div>
+  </div>
+
+  <!-- Modal Hitung Mundur 3 2 1 Saat Masuk Game -->
+  <div class="countdown-overlay" id="gameCountdownOverlay" style="display: none;">
+    <div class="countdown-modal">
+      <div class="countdown-aura"></div>
+      <div class="countdown-watermark" id="countdownWatermark">参</div>
+      <div class="countdown-number" id="countdownNumber">3</div>
+      <div class="countdown-subtext" id="countdownSubtext">Bersiap...</div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

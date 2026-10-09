@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ninja Determinan: Mengolah Matriks 2x2 Jadi Permainan Layar Sentuh - Tukang Olah</title>
+        <link rel="stylesheet" href="../../css/style.css" type="text/css" media="all">
+        <script src="../../scripts/theme.js"></script>
+    </head>
+    <style>        
+        body {
+            background-color: var(--b);
+            color: var(--text);
+            overflow: auto;
+            text-align: left;
+            background-image: none;
+            margin: 10px;
+        }
+
+        .post-container {
+            max-width: 560px;
+            margin: auto;
+            padding-bottom: 24px;
+        }
+
+        .post-header {
+            border-bottom: var(--bw) var(--bt) var(--bc);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .post-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            color: var(--pink);
+            margin: 8px 0;
+            line-height: 1.25;
+        }
+
+        .post-meta {
+            font-size: 14px;
+            color: var(--text);
+            opacity: 0.85;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .post-body p {
+            line-height: 1.3;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .post-body h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17px;
+            color: var(--pink);
+            margin: 18px 0 6px 0;
+            border-left: 3px solid var(--bc);
+            padding-left: 8px;
+        }
+
+        .formula-box {
+            border: var(--bw) var(--bt) var(--bc);
+            background-color: var(--h);
+            padding: 16px 20px;
+            margin: 16px auto;
+            text-align: center;
+        }
+
+        .math-expr {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-family: 'Pixel Operator', monospace;
+            font-size: 21px;
+            color: var(--text);
+            flex-wrap: wrap;
+        }
+
+        .math-label, .math-calc {
+            display: inline-block;
+            font-size: 21px;
+        }
+
+        .matrix-det {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 2px solid var(--text);
+            border-right: 2px solid var(--text);
+            padding: 2px 12px;
+            margin: 0 4px;
+            line-height: 1.25;
+        }
+
+        .matrix-row {
+            display: flex;
+            gap: 22px;
+            justify-content: space-between;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .matrix-row span {
+            width: 16px;
+            text-align: center;
+        }
+
+        .game-launch-box {
+            border: var(--bw) var(--bt) var(--pink);
+            background-color: var(--h);
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .game-launch-btn {
+            display: inline-block;
+            background-color: var(--pink);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            padding: 8px 18px;
+            text-decoration: none;
+            border: 2px solid var(--bc);
+            transition: 0.2s ease;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .game-launch-btn:hover {
+            background-color: #ff55a3;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-nav-action {
+            display: inline-block;
+            border: var(--bw) var(--bt) var(--bc);
+            background-color: var(--h);
+            color: var(--pink);
+            font-family: 'Pixel Operator', monospace;
+            font-size: 15px;
+            padding: 4px 10px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-nav-action:hover {
+            background-color: var(--pink);
+            color: white;
+        }
+
+        .disclaimer-box {
+            border: 1px solid var(--pink);
+            background-color: var(--h);
+            padding: 12px;
+            margin: 22px 0 10px 0;
+            font-size: 15px;
+            line-height: 1.35;
+        }
+    </style>
+    <body>
+        <div class="post-container">
+            <div style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+                <a href="../blog.html" class="btn-nav-action">Kembali ke Daftar Blog</a>
+                <a href="004-ninja-determinan.html" target="_blank" class="btn-nav-action" title="Buka di tab baru browser">Tab Baru</a>
+            </div>
+
+            <div class="post-header">
+                <div class="post-meta">
+                    <span style="font-family:'Orbitron', monospace; color:var(--pink);">LOG #004</span>
+                    <span>&bull;</span>
+                    <span>09.10.2026</span>
+                    <span class="tag-status">EDUKASI</span>
+                    <span>&bull;</span>
+                    <span>4 min baca</span>
+                </div>
+                <h1 class="post-title">Ninja Determinan: Mengolah Matriks 2x2 Jadi Permainan Layar Sentuh</h1>
+            </div>
+
+            <div class="post-body">
+                <p>
+                    Tanggal 5 sampai 8 Oktober kemarin, saya mengikuti kegiatan workshop yang diadakan oleh dinas pendidikan daerah kami. Agendanya mengangkat tema SPMI, Literasi dan Numerasi, serta Digitalisasi Pembelajaran.
+                </p>
+                <p>
+                    Banyak hal menarik yang dibahas di sana, terutama soal pemanfaatan Papan Interaktif Digital (PID). Perangkat layar sentuh besar di kelas semestinya tidak sekadar menggantikan proyektor atau papan tulis biasa. Adanya layar interaktif membuka peluang agar murid bisa benar-benar bermain sambil belajar.
+                </p>
+                <p>
+                    Sebagai guru, peran kita memang diarahkan menjadi fasilitator yang mampu merancang media belajar menarik. Dengan bantuan perkembangan AI sekarang, proses mewujudkan ide media pembelajaran juga terasa jauh lebih ringan dan bisa dioptimalkan, bahkan bagi yang masih pemula dalam hal pemrograman.
+                </p>
+
+                <h2>Menghubungkan Determinan dan Pola Tebasan</h2>
+                <p>
+                    Di kelas matematika saat ini, materi yang sedang berjalan adalah matriks, dan sekarang sudah sampai pada bahasan determinan matriks ordo 2x2.
+                </p>
+                <p>
+                    Kalau kita perhatikan cara menghitung determinan matriks ordo dua:
+                </p>
+                
+                <div class="formula-box">
+                    <div class="math-expr">
+                        <span class="math-label">det(A) =</span>
+                        <div class="matrix-det">
+                            <div class="matrix-row"><span>a</span><span>b</span></div>
+                            <div class="matrix-row"><span>c</span><span>d</span></div>
+                        </div>
+                        <span class="math-calc">= (a &times; d) &minus; (b &times; c)</span>
+                    </div>
+                </div>
+
+                <p>
+                    Pencarian determinannya selalu melibatkan dua diagonal: diagonal utama dari kiri atas ke kanan bawah (a dikali d), lalu dikurangi hasil kali diagonal samping dari kanan atas ke kiri bawah (b dikali c).
+                </p>
+                <p>
+                    Melihat pola garis diagonal itu, saya langsung teringat pada permainan Fruit Ninja, di mana pemain memotong objek lewat sapuan jari di layar. Dari situ terpikir, bagaimana kalau pola diagonal determinan ini dibuat seperti tebasan ninja di layar sentuh PID? Murid bisa maju, mengusap diagonalnya, lalu beradu cepat menghitung hasilnya.
+                </p>
+
+                <h2>Konsultasi dan Rencana Penerapan</h2>
+                <p>
+                    Ide ini sempat saya diskusikan dengan narasumber workshop, dan respon beliau sangat positif. Pendekatan seperti ini dinilai pas untuk memanfaatkan layar interaktif secara konkret dan menyenangkan bagi murid. Rencananya konsep ini akan segera saya demonstrasikan pada saat pelaksanaan pembelajaran di kelas nanti.
+                </p>
+
+                <h2>Dijalankan Secara Lokal</h2>
+                <p>
+                    Supaya praktis dan tidak bergantung pada kestabilan koneksi internet di sekolah, game ini dirancang agar bisa berjalan penuh secara offline. Cukup dijalankan lewat web server lokal seperti Laragon atau XAMPP di laptop yang terhubung ke layar interaktif.
+                </p>
+
+                <div class="game-launch-box">
+                    <div style="font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--pink); margin-bottom: 6px;">
+                        Prototipe Game Ninja Determinan
+                    </div>
+                    <p style="font-size: 15px; margin: 4px 0 10px 0;">
+                        Tersedia mode latihan untuk pengenalan dan mode tanding untuk latihan hitung cepat matriks 2x2.
+                    </p>
+                    <a href="../../proj-files/detninja" target="_blank" rel="noopener noreferrer" class="game-launch-btn">
+                        Coba Game
+                    </a>
+                </div>
+
+                <p>
+                    Terkadang materi matematika yang terlihat kaku di lembar latihan hanya butuh sedikit sentuhan cara penyampaian agar murid lebih antusias untuk mencoba.
+                </p>
+
+                <div class="disclaimer-box">
+                    <strong>Catatan:</strong><br>
+                    <em>Researched by a human. Kreativitas itu adanya di ide dan riset. AI hanya digunakan untuk menyusun kalimat dan merapikan tata bahasa.</em>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:24px; font-size:15px; opacity:0.8;">
+                #NamanyaJugaMengolah - Tukang Olah Corp.
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,6 +1,15 @@
 
 const BLOG_POSTS = [
     {
+        id: "004",
+        title: "Ninja Determinan: Mengolah Matriks 2x2 Jadi Permainan Layar Sentuh",
+        date: "09.10.2026",
+        tag: "EDUKASI",
+        readTime: "4 min baca",
+        excerpt: "Berangkat dari workshop SPMI dan Digitalisasi Pembelajaran, fasilitas Papan Interaktif Digital (PID) di kelas dicoba diolah menjadi permainan tebas diagonal matriks ala Fruit Ninja agar murid bisa bermain sambil belajar.",
+        file: "posts/004-ninja-determinan.html"
+    },
+    {
         id: "003",
         title: "Melawan Bloatware di Era Komputasi Modern",
         date: "12.09.2026",
