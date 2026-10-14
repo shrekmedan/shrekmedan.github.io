@@ -182,7 +182,7 @@
                 container.innerHTML = filtered.map(post => `
                     <div class="blog-card">
                         <div class="blog-date">
-                            LOG #${post.id} // ${post.date}
+                            #${post.id} // ${post.date}
                             <span class="tag-status">${post.tag || 'UMUM'}</span>
                             <span style="font-size:13px; opacity:0.8; margin-left:6px;">${post.readTime || ''}</span>
                         </div>
@@ -193,7 +193,7 @@
                             ${escapeHtml(post.excerpt)}
                         </p>
                         <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px dashed var(--bc); padding-top:6px; margin-top:6px;">
-                            <a href="${post.file}" class="btn-read-post">BACA ARTIKEL &rarr;</a>
+                            <a href="${post.file}" class="btn-read-post">Baca Artikel &gt;</a>
                             <a href="${post.file}" target="_blank" style="font-size:14px; opacity:0.8;" title="Buka di tab baru">Tab Baru</a>
                         </div>
                     </div>

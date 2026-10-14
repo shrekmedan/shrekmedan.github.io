@@ -8,6 +8,7 @@
         <link rel="icon" type="image/gif" href="../../images/j2aivj.gif">
         <link rel="stylesheet" href="../../css/style.css" type="text/css" media="all">
         <script src="../../scripts/theme.js"></script>
+        <script src="post-nav.js"></script>
     </head>
     <style>        
         body {
@@ -102,17 +103,13 @@
     </style>
     <body>
         <div class="post-container">
-            <!-- Navigasi Atas -->
-            <div style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
-                <a href="../blog.html" class="btn-nav-action">&larr; KEMBALI KE DAFTAR BLOG</a>
-                <!-- Link buka di tab baru (ganti nama filenya jika sudah disimpan) -->
-                <a href="template-post.html" target="_blank" class="btn-nav-action" title="Buka di tab baru browser">&#8599; TAB BARU</a>
-            </div>
+            <!-- Navigasi Atas Otomatis (via post-nav.js) -->
+            <div id="postTopNav"></div>
 
             <!-- Header Artikel -->
             <div class="post-header">
                 <div class="post-meta">
-                    <span style="font-family:'Orbitron', monospace; color:var(--pink);">LOG #004</span>
+                    <span style="font-family:'Orbitron', monospace; color:var(--pink);">#XXX</span>
                     <span>&bull;</span>
                     <span>03.10.2026</span>
                     <span class="tag-status">KATEGORI</span>
